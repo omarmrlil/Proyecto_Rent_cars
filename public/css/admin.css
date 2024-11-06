@@ -1,0 +1,58 @@
+:root {
+    --color-primario: #A8DCE7;
+    --color-secundario: #101422;
+    --color-fondo: #FFFFFF;
+    --color-acento: #272B3B;
+    --color-exito: #28A745;
+    --color-advertencia: #FFC107;
+    --color-error: #DC3545;
+}
+
+/* Sidebar */
+#sidebar {
+    min-height: 100vh;
+    background-color: var(--color-secundario);
+    padding-top: 20px;
+}
+
+#sidebar .nav-link {
+    padding: 10px;
+    color: #fff;
+}
+
+#sidebar .nav-link:hover {
+    background-color: var(--color-acento);
+    color: #fff;
+}
+
+#sidebar .nav-link.active {
+    background-color: var(--color-primario);
+    color: #fff;
+}
+
+/* Main content */
+.main-content {
+    padding: 20px;
+}
+
+/* Estilos para tarjetas en el dashboard */
+.card {
+    margin-bottom: 20px;
+    border-color: var(--color-acento);
+}
+
+.card-header,
+.card-body {
+    background-color: var(--color-primario);
+    color: #FFFFFF;
+}
+
+/* Botones */
+.btn-primary {
+    background-color: var(--color-primario);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-acento);
+}

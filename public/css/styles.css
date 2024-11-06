@@ -1,0 +1,144 @@
+:root {
+    --color-primario: #A8DCE7;
+    --color-secundario: #101422;
+    --color-fondo: #FFFFFF;
+    --color-acento: #272B3B;
+    --color-exito: #28A745;
+    --color-advertencia: #FFC107;
+    --color-error: #DC3545;
+}
+/* Estilos Generales */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-fondo);
+    color: var(--color-secundario);
+}
+
+h1,
+h2,
+h3 {
+    color: var(--color-primario);
+}
+
+/* Header */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: var(--color-acento);
+}
+
+.navbar .logo h1 {
+    color: var(--color-fondo);
+}
+
+.nav-links a {
+    color: var(--color-fondo);
+}
+
+.nav-links .btn-login,
+.nav-links .btn-register {
+    background-color: var(--color-primario);
+    color: #FFFFFF;
+}
+
+/* Hero Section */
+.hero {
+    background: url('/images/portada.jpg') center no-repeat;
+    background-size: cover;
+    color: var(--color-fondo);
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero h1 {
+    font-size: 3em;
+}
+
+.hero .btn-primary {
+    background-color: var(--color-primario);
+    color: #fff;
+    padding: 10px 20px;
+}
+
+/* Sobre Nosotros */
+.sobre-nosotros {
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+}
+
+.contenedor-nosotros {
+    display: flex;
+    align-items: center;
+}
+
+.imagen-nosotros img {
+    width: 100%;
+    max-width: 400px;
+}
+
+.texto-nosotros h2,
+.texto-nosotros p {
+    color: var(--color-secundario);
+}
+
+/* Servicios */
+.servicios {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: var(--color-acento);
+    color: var(--color-fondo);
+}
+
+.servicio-item h3 {
+    color: var(--color-primario);
+}
+
+/* Botones */
+.btn-primary {
+    background-color: var(--color-primario);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-acento);
+}
+
+.btn-secondary {
+    background-color: var(--color-acento);
+    color: #fff;
+}
+
+/* Mensajes de Éxito, Advertencia y Error */
+.alert-success {
+    background-color: var(--color-exito);
+    color: #fff;
+}
+
+.alert-warning {
+    background-color: var(--color-advertencia);
+    color: #fff;
+}
+
+.alert-danger {
+    background-color: var(--color-error);
+    color: #fff;
+}
+
+/* Footer */
+.footer-section {
+    background-color: var(--color-acento);
+    color: var(--color-fondo);
+    padding: 50px 0;
+}
+
+.footer-links ul li a {
+    color: var(--color-fondo);
+}
+
+.footer-links ul li a:hover {
+    color: var(--color-primario);
+}
