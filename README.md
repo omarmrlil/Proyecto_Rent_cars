@@ -1,3 +1,49 @@
+# A&J Rent Cars - Sistema de Gestión de Alquiler de Autos
+
+Este es un sistema de gestión de alquiler de autos desarrollado para **A&J Rent Cars**, una empresa de alquiler de vehículos. La aplicación está diseñada para gestionar clientes, vehículos, pagos, notificaciones y reportes de forma eficiente. El sistema también ofrece una administración por roles, lo cual permite a administradores, empleados y clientes acceder a diferentes módulos y funciones.
+
+## Características Principales
+
+- **Gestión de Usuarios y Roles**: 
+  - Registro y autenticación de usuarios.
+  - Administración de roles (administrador, empleado y cliente).
+  - Acceso restringido a módulos según el rol del usuario.
+
+- **Gestión de Vehículos**:
+  - Administración del inventario de vehículos.
+  - Detalles completos del vehículo, incluyendo especificaciones técnicas y multimedia.
+  - Estados del vehículo (disponible, alquilado, en mantenimiento).
+
+- **Módulo de Alquileres**:
+  - Registro de alquileres, control de fechas y costos.
+  - Gestión de estado de alquiler (pendiente, completado, cancelado).
+  - Notificaciones sobre próximos vencimientos y devoluciones.
+
+- **Pagos y Facturación**:
+  - Registro de pagos y generación de facturas para cada alquiler.
+  - Cálculo automático de impuestos acorde a la ley dominicana (ITBIS 18%).
+
+- **Mantenimiento de Vehículos**:
+  - Programación y registro de mantenimientos preventivos y correctivos.
+  - Administración de piezas y consumibles en el inventario.
+  - Historial de mantenimientos realizados para cada vehículo.
+
+- **Notificaciones Automáticas**:
+  - Notificación a los clientes y empleados sobre mantenimientos, devoluciones, y pagos.
+  - Sistema de alertas para recordar eventos importantes.
+
+- **Generación de Reportes**:
+  - Reportes de ingresos y gastos diarios, semanales y mensuales.
+  - Reportes detallados de alquileres y mantenimientos.
+
+## Tecnologías Utilizadas
+
+- **Backend**: PHP (Laravel Framework)
+- **Base de Datos**: MySQL
+- **Frontend**: HTML, CSS, JavaScript, Bootstrap
+- **Control de Versiones**: Git y GitHub
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
@@ -62,3 +108,5 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
