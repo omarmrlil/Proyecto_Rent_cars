@@ -1,18 +1,80 @@
+:root {
+    --color-primario: #007bff;
+    /* Azul primario */
+    --color-secundario: #333;
+    /* Color de texto oscuro */
+    --color-fondo: #f2f2f2;
+    /* Fondo claro */
+    --color-btn-register: #007bff;
+    /* Color para el botón de registro */
+}
+
+/* Estilos Generales */
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f2f2f2;
+    background-color: var(--color-fondo);
 }
 
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: var(--color-secundario);
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.navbar-brand i {
+    color: var(--color-btn-register);
+    margin-right: 8px;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-links .nav-link {
+    color: var(--color-secundario);
+    margin-left: 20px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.navbar-links .nav-link:hover {
+    color: var(--color-btn-register);
+}
+
+.navbar-links .btn-register {
+    background-color: var(--color-btn-register);
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 20px;
+    margin-left: 20px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar-links .btn-register:hover {
+    background-color: #0056b3;
+}
+
+/* Login Container */
 .login-container {
     display: flex;
     width: 800px;
     height: 500px;
+    margin: 50px auto;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }
 
@@ -61,7 +123,7 @@ body {
     width: 100%;
     padding: 10px;
     margin-top: 10px;
-    background-color: #007bff;
+    background-color: var(--color-btn-register);
     border: none;
     color: white;
     border-radius: 5px;
@@ -80,7 +142,7 @@ body {
 }
 
 .register-link a {
-    color: #007bff;
+    color: var(--color-btn-register);
     text-decoration: none;
 }
 
@@ -89,6 +151,6 @@ body {
 }
 
 .form-container i {
-    color: black;
+    color: var(--color-secundario);
     margin-bottom: 10px;
 }
