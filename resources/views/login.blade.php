@@ -1,3 +1,6 @@
+@extends('layout.app')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,11 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Iniciar Sesión</title>
 </head>
 <body>
-
 <div class="login-container">
     <div class="image-container">
         <img src="{{ asset('images/car.jpeg') }}" alt="Auto de Login">
