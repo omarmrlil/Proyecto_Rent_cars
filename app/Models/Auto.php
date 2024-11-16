@@ -20,10 +20,9 @@ class Auto extends Model
         'matricula',
         'precio_por_dia',
         'foto_auto',
-        'kilometraje', // Asegúrate de agregar este campo
+        'kilometraje',  
         'estado',
     ];
-
 
     // Si no estás utilizando los campos created_at y updated_at
     public $timestamps = false;
@@ -37,6 +36,7 @@ class Auto extends Model
     {
         return $this->hasMany(Mantenimiento::class, 'id_auto');
     }
+
     public function marca()
     {
         return $this->belongsTo(MarcaAuto::class, 'id_marca');
@@ -47,4 +47,8 @@ class Auto extends Model
         return $this->belongsTo(TipoAuto::class, 'id_tipo');
     }
 
+    public function detalles()
+    {
+        return $this->hasOne(DetalleAuto::class, 'id_auto');
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Auto;
+use App\Models\DetalleAuto;
 use App\Models\MarcaAuto;
 use App\Models\TipoAuto;
 use Illuminate\Http\Request;
@@ -10,14 +11,12 @@ use Illuminate\Support\Facades\Storage;
 
 class AutoController extends Controller
 {
-    // Método para listar todos los autos
     public function index()
     {
-        $autos = Auto::with('marca', 'tipo')->get();
+        $autos = Auto::with('marca', 'tipo', 'detalles')->get();
         return view('autos.index', compact('autos'));
     }
 
-    // Método para mostrar el formulario de creación de un nuevo auto
     public function create()
     {
         $marcas = MarcaAuto::all();
@@ -25,7 +24,6 @@ class AutoController extends Controller
         return view('autos.create', compact('marcas', 'tipos'));
     }
 
-    // Método para almacenar un nuevo auto en la base de datos
     public function store(Request $request)
     {
         $request->validate([
@@ -35,38 +33,67 @@ class AutoController extends Controller
             'año' => 'required|integer|min:1900|max:' . date('Y'),
             'matricula' => 'required|string|unique:autos,matricula|max:50',
             'precio_por_dia' => 'required|numeric|min:0',
-            'kilometraje' => 'required|integer|min:0', // Validar el kilometraje
+            'kilometraje' => 'required|integer|min:0',
             'foto_auto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'transmision' => 'required|in:manual,automatica',
+            'consumo_combustible' => 'required|numeric|min:0',
+            'capacidad_tanque' => 'required|numeric|min:0',
+            'numero_asientos' => 'required|integer|min:1',
+            'numero_puertas' => 'required|integer|min:1',
+            'color' => 'required|string|max:50',
+            'tipo_combustible' => 'required|in:gasolina,diesel,electrico,hibrido',
+            'capacidad_maletero' => 'nullable|integer|min:0',
+            'aire_acondicionado' => 'required|in:sí,no',
+            'gps' => 'required|in:sí,no',
+            'velocidad_maxima' => 'required|integer|min:0',
+            'peso' => 'required|numeric|min:0',
+            'fecha_compra' => 'required|date',
+            'condicion' => 'required|in:nuevo,usado',
         ]);
-
 
         $data = $request->all();
         if ($request->hasFile('foto_auto')) {
             $data['foto_auto'] = $request->file('foto_auto')->store('fotos_autos', 'public');
         }
 
-        Auto::create($data);
+        // Crear el auto
+        $auto = Auto::create($data);
 
-        return redirect()->route('autos.index')->with('success', 'Auto registrado exitosamente.');
+        // Crear los detalles del auto asociado
+        $auto->detalles()->create([
+            'transmision' => $request->transmision,
+            'consumo_combustible' => $request->consumo_combustible,
+            'capacidad_tanque' => $request->capacidad_tanque,
+            'numero_asientos' => $request->numero_asientos,
+            'numero_puertas' => $request->numero_puertas,
+            'color' => $request->color,
+            'tipo_combustible' => $request->tipo_combustible,
+            'capacidad_maletero' => $request->capacidad_maletero,
+            'aire_acondicionado' => $request->aire_acondicionado,
+            'gps' => $request->gps,
+            'velocidad_maxima' => $request->velocidad_maxima,
+            'peso' => $request->peso,
+            'fecha_compra' => $request->fecha_compra,
+            'condicion' => $request->condicion,
+        ]);
+
+        return redirect()->route('autos.index')->with('success', 'Auto y sus detalles registrados exitosamente.');
     }
 
-    // Método para mostrar un auto específico (no es necesario si no necesitas una vista detallada)
     public function show($id)
     {
-        $auto = Auto::findOrFail($id);
+        $auto = Auto::with('detalles')->findOrFail($id);
         return view('autos.show', compact('auto'));
     }
 
-    // Método para mostrar el formulario de edición de un auto
     public function edit($id)
     {
-        $auto = Auto::findOrFail($id);
+        $auto = Auto::with('detalles')->findOrFail($id);
         $marcas = MarcaAuto::all();
         $tipos = TipoAuto::all();
         return view('autos.edit', compact('auto', 'marcas', 'tipos'));
     }
 
-    // Método para actualizar un auto en la base de datos
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -83,7 +110,6 @@ class AutoController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('foto_auto')) {
-            // Eliminar la foto antigua si existe
             if ($auto->foto_auto && Storage::exists($auto->foto_auto)) {
                 Storage::delete($auto->foto_auto);
             }
@@ -95,11 +121,9 @@ class AutoController extends Controller
         return redirect()->route('autos.index')->with('success', 'Auto actualizado exitosamente.');
     }
 
-    // Método para eliminar un auto de la base de datos
     public function destroy($id)
     {
         $auto = Auto::findOrFail($id);
-        // Eliminar la foto asociada si existe
         if ($auto->foto_auto && Storage::exists($auto->foto_auto)) {
             Storage::delete($auto->foto_auto);
         }
@@ -107,7 +131,7 @@ class AutoController extends Controller
 
         return redirect()->route('autos.index')->with('success', 'Auto eliminado exitosamente.');
     }
-    
+
     public function search(Request $request)
     {
         $query = Auto::query();

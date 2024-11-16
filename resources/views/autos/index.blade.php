@@ -15,6 +15,10 @@
                 <th>Año</th>
                 <th>Matrícula</th>
                 <th>Precio por Día</th>
+                <th>Transmisión</th>
+                <th>Consumo</th>
+                <th>Asientos</th>
+                <th>Color</th>
                 <th>Foto</th>
                 <th>Acciones</th>
             </tr>
@@ -29,6 +33,10 @@
                     <td>{{ $auto->año }}</td>
                     <td>{{ $auto->matricula }}</td>
                     <td>{{ $auto->precio_por_dia }} USD</td>
+                    <td>{{ $auto->detalles->transmision }}</td>
+                    <td>{{ $auto->detalles->consumo_combustible }} L/100 km</td>
+                    <td>{{ $auto->detalles->numero_asientos }}</td>
+                    <td>{{ $auto->detalles->color }}</td>
                     <td>
                         @if ($auto->foto_auto)
                             <img src="{{ asset('storage/' . $auto->foto_auto) }}" alt="Foto de {{ $auto->modelo }}" width="100">
