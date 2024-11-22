@@ -24,42 +24,31 @@
 
         <!-- Favicon -->
         <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">
-    </head>
+   <!-- Barra de Navegación Principal -->
+   <header>
+    <nav class="navbar" aria-label="Barra de navegación principal">
 
-    <body>
-        <!-- Header / Navbar Section -->
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="/">A&J Rent Cars</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="/">Inicio</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/vehiculos">Vehículos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/servicios">Servicios</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/contacto">Contacto</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link btn btn-primary text-white" href="/login">Inicia Sesión</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link btn btn-outline-light" href="/register">Regístrate</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
+        <!-- Logo y Nombre de la Compañía -->
+        <div class="navbar-logo">
+            <img src="{{asset('images/src/img/logos/coche.png')}}" alt="Ícono de un auto" aria-hidden="true">
+            <span class="company-name">A&J Rent Cars</span>
+        </div>
+
+        <!-- Menú de Navegación -->
+        <ul class="navbar-menu" role="menubar">
+            <li><a href="/" role="menuitem">Inicio</a></li>
+            <li><a href="/autos" role="menuitem">Autos</a></li>
+            <li><a href="#" role="menuitem">Servicio</a></li>
+            <li><a href="#" role="menuitem">Contacto</a></li>
+        </ul>
+
+        <!-- Botones de Acción -->
+        <div class="navbar-buttons">
+            <a href="/register" class="register" role="button">Registrarte</a>
+            <a href="/login" class="login" role="button">Iniciar Sesión</a>
+        </div>
+    </nav>
+</header>
 
         <!-- Main Content Section -->
         <main>
@@ -68,13 +57,60 @@
             </div>
         </main>
 
-        <!-- Footer Section -->
-        <footer class="bg-dark text-white mt-auto py-4">
-            <div class="container text-center">
-                <p>&copy; {{ date('Y') }} A&J Rent Cars. Todos los derechos reservados.</p>
-                <p>Email: contacto@ajrentcars.com | Teléfono: +1 809 123 4567</p>
+    <!-- Sección del Pie de Página -->
+    <footer class="footer">
+        <!-- Logos de Marcas -->
+        <div class="footer-logos">
+            <img src="{{asset('images/src/img/logos/toyota.png')}}" alt="Toyota">
+            <img src="{{asset('images/src/img/logos/ford.svg')}}" alt="Ford">
+            <img src="{{asset('images/src/img/logos/mercedes.png')}}" alt="Mercedes">
+            <img src="{{asset('images/src/img/logos/jeep.webp')}}" alt="Jeep">
+            <img src="{{asset('images/src/img/logos/bmw.jpg')}}" alt="BMW">
+            <img src="{{asset('images/src/img/logos/audi.jpg')}}" alt="Audi">
+        </div>
+
+        <!-- Información de la Empresa -->
+        <div class="footer-info">
+
+            <!-- Información General -->
+            <div class="footer-details">
+                <div class="company-info">
+                    <p><i class="fas fa-car"></i> A&J Rent Cars</p>
+                    <p>Faucibus faucibus pellentesque dictum turpis. Id pellentesque turpis massa a id iaculis lorem
+                        turpis euismod.</p>
+
+                    <!-- Redes Sociales -->
+                    <div class="social-media">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Información de Contacto -->
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>Dirección <br> La Vega</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>Email <br> A&JRent@gmail.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <p>Teléfono <br> 829-753-2211</p>
+                    </div>
+                </div>
             </div>
-        </footer>
+        </div>
+
+        <!-- Derechos de Autor -->
+        <div class="footer-copyright">
+            <p>&copy; Copyright A&J Rent Cars, 2024</p>
+        </div>
+    </footer>
 
         <!-- External JS Scripts (Bootstrap, Font Awesome, etc.) -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

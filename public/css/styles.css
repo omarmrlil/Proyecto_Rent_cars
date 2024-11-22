@@ -1,144 +1,421 @@
-:root {
-    --color-primario: #A8DCE7;
-    --color-secundario: #101422;
-    --color-fondo: #FFFFFF;
-    --color-acento: #272B3B;
-    --color-exito: #28A745;
-    --color-advertencia: #FFC107;
-    --color-error: #DC3545;
-}
-/* Estilos Generales */
-body {
-    font-family: 'Roboto', sans-serif;
+/* Reset básico para evitar inconsistencias entre navegadores */
+* {
     margin: 0;
     padding: 0;
-    background-color: var(--color-fondo);
-    color: var(--color-secundario);
-}
+    box-sizing: border-box;
+  }
 
-h1,
-h2,
-h3 {
-    color: var(--color-primario);
-}
+  /* Estilo base del cuerpo */
+  body {
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    font-size: 1rem; /* Definir tamaño base, 1rem = 16px */
+  }
 
-/* Header */
-.navbar {
+  /* Estilo de la barra de navegación */
+  .navbar {
     display: flex;
     justify-content: space-between;
-    padding: 20px;
-    background-color: var(--color-acento);
-}
+    align-items: center;
+    padding: 0.625rem 1.25rem;
+    background-color: #ffffff;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+  }
 
-.navbar .logo h1 {
-    color: var(--color-fondo);
-}
+  .navbar-logo img {
+    width: 1.5rem;
+    height: auto;
+    margin-right: 0.5rem;
+  }
 
-.nav-links a {
-    color: var(--color-fondo);
-}
+  .company-name {
+    font-weight: bold;
+    font-size: 1.125rem;
+    color: #000;
+  }
 
-.nav-links .btn-login,
-.nav-links .btn-register {
-    background-color: var(--color-primario);
-    color: #FFFFFF;
-}
-
-/* Hero Section */
-.hero {
-    background: url('/images/portada.jpg') center no-repeat;
-    background-size: cover;
-    color: var(--color-fondo);
-    text-align: center;
-    padding: 100px 20px;
-}
-
-.hero h1 {
-    font-size: 3em;
-}
-
-.hero .btn-primary {
-    background-color: var(--color-primario);
-    color: #fff;
-    padding: 10px 20px;
-}
-
-/* Sobre Nosotros */
-.sobre-nosotros {
+  .navbar-menu {
+    list-style: none;
     display: flex;
-    justify-content: center;
-    padding: 50px;
-}
+    gap: 1.25rem;
+  }
 
-.contenedor-nosotros {
+  .navbar-menu li {
+    position: relative;
+  }
+
+  .navbar-menu a {
+    text-decoration: none;
+    color: #000;
+    font-size: 1rem;
+  }
+
+  .navbar-menu .active {
+    font-weight: bold;
+  }
+
+  .navbar-menu .active::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 0.125rem;
+    background-color: #ff6600;
+    position: absolute;
+    bottom: -0.25rem;
+    left: 0;
+  }
+
+  .navbar-buttons {
+    display: flex;
+    gap: 0.625rem;
+  }
+
+  .register, .login {
+    padding: 0.5rem 0.75rem;
+    border-radius: 1.25rem;
+    text-decoration: none;
+    font-size: 0.875rem;
+  }
+
+  .register {
+    background-color: #0066ff;
+    color: #fff;
+  }
+
+  .login {
+    background-color: #999999;
+    color: #fff;
+  }
+
+  /* Sección de alquiler */
+  .rental-intro {
     display: flex;
     align-items: center;
-}
+    justify-content: center;
+    padding: 2.5rem;
+    gap: 2.5rem;
+    background-color: #ffffff;
+    margin-bottom: 1.25rem;
+  }
 
-.imagen-nosotros img {
-    width: 100%;
-    max-width: 400px;
-}
+  .intro-text {
+    max-width: 25rem;
+  }
 
-.texto-nosotros h2,
-.texto-nosotros p {
-    color: var(--color-secundario);
-}
+  .intro-text h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.9375rem;
+  }
 
-/* Servicios */
-.servicios {
+  .intro-text p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+  }
+
+  .btn-reserve {
+    display: inline-block;
+    background-color: #0066ff;
+    color: #fff;
+    padding: 0.625rem 1.25rem;
+    text-decoration: none;
+    border-radius: 0.3125rem;
+    font-size: 1rem;
+  }
+
+  .btn-reserve:hover {
+    background-color: #0056cc;
+  }
+
+  .intro-image img {
+    width: 25rem;
+    height: auto;
+    border-radius: 0.625rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+  }
+
+  /* Sección de búsqueda */
+  .search-section {
     text-align: center;
-    padding: 50px 20px;
-    background-color: var(--color-acento);
-    color: var(--color-fondo);
-}
+    padding: 1.25rem;
+    background-color: #ffffff;
 
-.servicio-item h3 {
-    color: var(--color-primario);
-}
+  }
 
-/* Botones */
-.btn-primary {
-    background-color: var(--color-primario);
+  .search-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .search-form {
+    display: flex;
+    justify-content: center;
+    gap: 0.625rem;
+    padding: 0.625rem;
+    background-color: #ffffff;
+    border-radius: 0.625rem;
+  }
+
+  .search-form input[type="text"] {
+    padding: 0.625rem;
+    font-size: 0.875rem;
+    border: 0.0625rem solid #ddd;
+    border-radius: 0.3125rem;
+    width: 9.375rem;
+  }
+
+  .btn-search {
+    background-color: #0066ff;
     color: #fff;
-}
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    border: none;
+    border-radius: 0.3125rem;
+    cursor: pointer;
+  }
 
-.btn-primary:hover {
-    background-color: var(--color-acento);
-}
+  .btn-search:hover {
+    background-color: #0056cc;
+  }
 
-.btn-secondary {
-    background-color: var(--color-acento);
+  /* Logos de marcas */
+  .brand-logos {
+    display: flex;
+    justify-content: center;
+    gap: 1.875rem;
+    margin-bottom: 3.125rem;
+  }
+
+  .brand-logos img {
+    width: 3.125rem;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+  }
+
+  .brand-logos img:hover {
+    opacity: 1;
+  }
+
+  /* Coches destacados */
+  .featured-cars {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .featured-cars h2 {
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .car-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+  }
+
+  .car-card {
+    background-color: #fff;
+    border-radius: 0.625rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+    padding: 1.25rem;
+    width: 11.25rem;
+    text-align: center;
+  }
+
+  .car-card img {
+    width: 100%;
+    border-radius: 0.3125rem;
+    margin-bottom: 0.625rem;
+  }
+
+  .car-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.625rem;
+  }
+
+  .car-card p {
+    font-size: 1rem;
+    color: #888;
+    margin-bottom: 0.9375rem;
+  }
+
+  .car-card button {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 0.625rem 1.25rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 0.3125rem;
+    transition: background-color 0.3s;
+  }
+
+  .car-card button:hover {
+    background-color: #ccc;
+  }
+
+  /* Por qué alquilar con nosotros */
+  .why-us {
+    margin-top: 2.5rem;
+    padding: 3.75rem;
+    background-color: #fff;
+    border-radius: 0.625rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+  }
+
+  .why-us-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .why-us-text {
+    max-width: 40%;
+  }
+
+  .why-us h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.9375rem;
+  }
+
+  .why-us p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+  }
+
+  .why-us button {
+    background-color: #007bff;
     color: #fff;
-}
+    border: none;
+    padding: 0.75rem 1.5625rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 0.3125rem;
+    transition: background-color 0.3s;
+  }
 
-/* Mensajes de Éxito, Advertencia y Error */
-.alert-success {
-    background-color: var(--color-exito);
-    color: #fff;
-}
+  .why-us button:hover {
+    background-color: #0056b3;
+  }
 
-.alert-warning {
-    background-color: var(--color-advertencia);
-    color: #fff;
-}
+  .why-us-image img {
+    max-width: 31.25rem;
+    width: 100%;
+    border-radius: 0.625rem;
+  }
 
-.alert-danger {
-    background-color: var(--color-error);
-    color: #fff;
-}
+  /* Pie de Página */
+  .footer {
+    background-color: #f9f9f9;
+    padding:1.2rem;
+    text-align: center;
+    border-radius: 0.625rem;
 
-/* Footer */
-.footer-section {
-    background-color: var(--color-acento);
-    color: var(--color-fondo);
-    padding: 50px 0;
-}
+  }
 
-.footer-links ul li a {
-    color: var(--color-fondo);
-}
+  .footer-logos {
+    display: flex;
+    justify-content: center;
+    gap: 1.875rem;
+    margin-bottom: 1.875rem;
+  }
 
-.footer-links ul li a:hover {
-    color: var(--color-primario);
-}
+  .footer-logos img {
+    width: 3.75rem;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+  }
+
+  .footer-logos img:hover {
+    opacity: 1;
+  }
+
+  .footer-info {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 1.875rem;
+    gap: 1.25rem;
+    text-align: left;
+  }
+
+  .footer-details {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10.2rem;
+    width: 100%;
+  }
+
+  .company-info {
+    max-width: 15.625rem;
+
+  }
+
+  .social-media a {
+    margin-right: 0.625rem;
+    color: #333;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+  }
+
+  .social-media a:hover {
+    color: #007bff;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9375rem;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  .contact-item i {
+    font-size: 1.5rem;
+    color: #007bff;
+  }
+
+  .footer p {
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  .footer-copyright {
+    border-top: 0.0625rem solid #ddd;
+    padding-top: 0.9375rem;
+    margin-top: 0.9375rem;
+  }
+
+  /* Estilos responsivos */
+  @media (max-width: 768px) {
+    .navbar-menu {
+      display: none; /* Oculta el menú en pantallas pequeñas */
+    }
+
+    .rental-intro {
+      flex-direction: column;
+      padding: 1.25rem;
+    }
+
+    .search-form {
+      flex-direction: column;
+    }
+
+    .why-us-content {
+      flex-direction: column;
+    }
+
+    .footer-info {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
