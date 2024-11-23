@@ -58,59 +58,39 @@
         </main>
 
     <!-- Sección del Pie de Página -->
-    <footer class="footer">
-        <!-- Logos de Marcas -->
-        <div class="footer-logos">
-            <img src="{{asset('images/src/img/logos/toyota.png')}}" alt="Toyota">
-            <img src="{{asset('images/src/img/logos/ford.svg')}}" alt="Ford">
-            <img src="{{asset('images/src/img/logos/mercedes.png')}}" alt="Mercedes">
-            <img src="{{asset('images/src/img/logos/jeep.webp')}}" alt="Jeep">
-            <img src="{{asset('images/src/img/logos/bmw.jpg')}}" alt="BMW">
-            <img src="{{asset('images/src/img/logos/audi.jpg')}}" alt="Audi">
-        </div>
-
-        <!-- Información de la Empresa -->
-        <div class="footer-info">
-
-            <!-- Información General -->
-            <div class="footer-details">
-                <div class="company-info">
-                    <p><i class="fas fa-car"></i> A&J Rent Cars</p>
-                    <p>Faucibus faucibus pellentesque dictum turpis. Id pellentesque turpis massa a id iaculis lorem
-                        turpis euismod.</p>
-
-                    <!-- Redes Sociales -->
-                    <div class="social-media">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-
-                <!-- Información de Contacto -->
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>Dirección <br> La Vega</p>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <p>Email <br> A&JRent@gmail.com</p>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <p>Teléfono <br> 829-753-2211</p>
-                    </div>
+    <footer class="bg-light text-dark py-4">
+    <div class="container">
+        <div class="row text-center text-md-start">
+            <div class="col-md-3">
+                <h5>A&J Rent Cars</h5>
+                <p>Faucibus faucibus pellentesque dictum turpis. Id pellentesque turpis massa a id iaculis lorem turpis euismod.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
+            <div class="col-md-3 contact-info">
+                <h5><i class="fa fa-map-marker-alt me-2"></i> Dirección</h5>
+                <p>La Vega</p>
+            </div>
+            <div class="col-md-3 contact-info">
+                <h5><i class="fa fa-envelope me-2"></i> Email</h5>
+                <p>A&JRent@gmail.com</p>
+            </div>
+            <div class="col-md-3 contact-info">
+                <h5><i class="fa fa-phone me-2"></i> Teléfono</h5>
+                <p>829-753-2211</p>
+            </div>
         </div>
+        <hr>
+        <div class="text-center">
+            <p>&copy; 2024 A&J Rent Cars. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</footer>
 
-        <!-- Derechos de Autor -->
-        <div class="footer-copyright">
-            <p>&copy; Copyright A&J Rent Cars, 2024</p>
-        </div>
-    </footer>
 
         <!-- External JS Scripts (Bootstrap, Font Awesome, etc.) -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

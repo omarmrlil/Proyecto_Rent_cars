@@ -12,39 +12,33 @@
     <!-- cuerpo de la pagina-->
     <!-- Sección Principal de Alquiler -->
 
-    <main>
-        <!-- Contenedor de presentación de Alquiler de Autos -->
-        <section class="rental-intro">
+    <section class="hero">
+    <div class="hero-content">
+        <h1>¿Busca un auto para alquilar?</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <a href="#" class="btn btn-primary">Reservar</a>
+    </div>
+    <div class="hero-image">
+        <img src="{{ asset('images/src/img/logos/imagen de sesion 1.png') }}" alt="Auto en la playa">
+    </div>
+</section>
 
-            <!-- Contenedor de Texto -->
-            <article class="intro-text">
-                <h1>¿Busca un auto para alquilar?</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat.</p>
-                <a href="#" class="btn-reserve">Reservar</a>
-            </article>
+<!-- Barra de búsqueda -->
+<section class="search-section">
+    <div class="search-container">
+        <h2>Busca tu auto ideal aquí!!</h2>
+        <form action="{{ route('search_vehicles') }}" method="GET" class="search-form">
+            @csrf
+            <div class="input-group">
+                <input type="text" name="marca" placeholder="Marca" class="form-control">
+                <input type="text" name="modelo" placeholder="Modelo" class="form-control">
+                <input type="number" name="precio_max" placeholder="Precio" class="form-control">
+                <button type="submit" class="btn btn-search">Buscar</button>
+            </div>
+        </form>
+    </div>
+</section>
 
-            <!-- Contenedor de Imagen -->
-            <figure class="intro-image">
-                <img src="{{asset('images/src/img/logos/imagen de sesion 1.png')}}" alt="Imagen de un auto deportivo rojo frente al mar">
-            </figure>
-        </section>
-
-        <!-- Sección de Búsqueda de Autos -->
-        <section class="search-section">
-            <h2>Busca tu auto ideal aquí!!</h2>
-
-            <!-- Formulario de Búsqueda de Autos -->
-            <form class="search-form" action="#" method="get">
-                <input type="text" name="brand" placeholder="Marca" aria-label="Marca">
-                <input type="text" name="model" placeholder="Modelo" aria-label="Modelo">
-                <input type="text" name="price" placeholder="Precio" aria-label="Precio">
-                <button type="submit" class="btn-search">Buscar</button>
-            </form>
-
-        </section>
-    </main>
 
     <!-- Sección de Logos de Marcas -->
     <section class="brand-logos">

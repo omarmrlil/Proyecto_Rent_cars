@@ -1,3 +1,14 @@
+:root {
+    --color-primario: #007bff;
+    /* Azul primario */
+    --color-secundario: #101422;
+    /* Color de texto oscuro */
+    --color-fondo: #FFFFFF;
+    /* Fondo claro */
+    --color-acento: #272B3B;
+    --color-btn-busqueda: #007bff;
+    /* Color para el botón de búsqueda */
+}
 /* Reset básico para evitar inconsistencias entre navegadores */
 * {
     margin: 0;
@@ -5,13 +16,13 @@
     box-sizing: border-box;
   }
 
-  /* Estilo base del cuerpo */
-  body {
-    font-family: "Roboto", sans-serif;
-    font-weight: 100;
-    font-style: normal;
-    font-size: 1rem; /* Definir tamaño base, 1rem = 16px */
-  }
+/* Estilos Generales */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-secundario);
+    margin: 0;
+}
 
   /* Estilo de la barra de navegación */
   .navbar {
@@ -88,98 +99,99 @@
     color: #fff;
   }
 
-  /* Sección de alquiler */
-  .rental-intro {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2.5rem;
-    gap: 2.5rem;
-    background-color: #ffffff;
-    margin-bottom: 1.25rem;
+  /* Sección Principal de Alquiler */
+  .hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      gap: 30px;
   }
 
-  .intro-text {
-    max-width: 25rem;
+  .hero-content {
+      flex: 1;
+      padding: 20px;
   }
 
-  .intro-text h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 0.9375rem;
+  .hero-content h1 {
+      font-size: 2.5em;
+      color: var(--color-secundario);
   }
 
-  .intro-text p {
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-bottom: 1.25rem;
+  .hero-content p {
+      color: #666666;
+      font-size: 1em;
+      margin: 20px 0;
   }
 
-  .btn-reserve {
-    display: inline-block;
-    background-color: #0066ff;
-    color: #fff;
-    padding: 0.625rem 1.25rem;
-    text-decoration: none;
-    border-radius: 0.3125rem;
-    font-size: 1rem;
+  .hero-content .btn-primary {
+      background-color: var(--color-primario);
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
   }
 
-  .btn-reserve:hover {
-    background-color: #0056cc;
+  .hero-content .btn-primary:hover {
+      background-color: #0056b3;
   }
 
-  .intro-image img {
-    width: 25rem;
-    height: auto;
-    border-radius: 0.625rem;
-    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+  .hero-image img {
+      width: 100%;
+      border-radius: 8px;
+      max-width: 500px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   }
 
-  /* Sección de búsqueda */
+  /* Search Section */
   .search-section {
-    text-align: center;
-    padding: 1.25rem;
-    background-color: #ffffff;
-
+      text-align: center;
+      padding: 50px 20px;
+      background-color: #f8f9fa;
   }
 
-  .search-section h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.25rem;
+  .search-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   }
 
-  .search-form {
-    display: flex;
-    justify-content: center;
-    gap: 0.625rem;
-    padding: 0.625rem;
-    background-color: #ffffff;
-    border-radius: 0.625rem;
+  .search-container h2 {
+      font-size: 2em;
+      color: var(--color-secundario);
+      margin-bottom: 20px;
   }
 
-  .search-form input[type="text"] {
-    padding: 0.625rem;
-    font-size: 0.875rem;
-    border: 0.0625rem solid #ddd;
-    border-radius: 0.3125rem;
-    width: 9.375rem;
+  .search-form .input-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
   }
 
-  .btn-search {
-    background-color: #0066ff;
-    color: #fff;
-    padding: 0.625rem 1.25rem;
-    font-size: 0.875rem;
-    border: none;
-    border-radius: 0.3125rem;
-    cursor: pointer;
+  .search-form .form-control {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
   }
 
-  .btn-search:hover {
-    background-color: #0056cc;
+  .search-form .btn-search {
+      background-color: var(--color-btn-busqueda);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
   }
 
+  .search-form .btn-search:hover {
+      background-color: #0056b3;
+  }
   /* Logos de marcas */
   .brand-logos {
     display: flex;
@@ -309,90 +321,56 @@
   }
 
   /* Pie de Página */
-  .footer {
-    background-color: #f9f9f9;
-    padding:1.2rem;
-    text-align: center;
-    border-radius: 0.625rem;
-
+  footer {
+      background-color: #FFFFFF;
+      /* Cambié a blanco para mayor contraste */
+      color: #333333;
+      padding: 50px 0;
   }
 
-  .footer-logos {
-    display: flex;
-    justify-content: center;
-    gap: 1.875rem;
-    margin-bottom: 1.875rem;
+  footer h5 {
+      font-weight: bold;
+      color: #101422;
+      /* Color oscuro para mayor contraste */
+      margin-bottom: 10px;
   }
 
-  .footer-logos img {
-    width: 3.75rem;
-    opacity: 0.6;
-    transition: opacity 0.3s;
+  footer p {
+      font-size: 14px;
+      color: #666666;
   }
 
-  .footer-logos img:hover {
-    opacity: 1;
+  footer .social-icons {
+      margin-top: 15px;
   }
 
-  .footer-info {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    margin-bottom: 1.875rem;
-    gap: 1.25rem;
-    text-align: left;
+  footer .social-icons a {
+      color: #101422;
+      /* Color oscuro para iconos */
+      font-size: 18px;
+      margin-right: 15px;
+      transition: color 0.3s;
   }
 
-  .footer-details {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10.2rem;
-    width: 100%;
+  footer .social-icons a:hover {
+      color: #007bff;
+      /* Color de acento al pasar el mouse */
   }
 
-  .company-info {
-    max-width: 15.625rem;
-
+  .footer-section .contact-info i {
+      font-size: 18px;
+      color: #101422;
+      margin-right: 8px;
   }
 
-  .social-media a {
-    margin-right: 0.625rem;
-    color: #333;
-    font-size: 1.2rem;
-    transition: color 0.3s;
+  footer hr {
+      border-top: 1px solid #ddd;
+      margin: 20px 0;
   }
 
-  .social-media a:hover {
-    color: #007bff;
-  }
-
-  .contact-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.9375rem;
-  }
-
-  .contact-item {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-  }
-
-  .contact-item i {
-    font-size: 1.5rem;
-    color: #007bff;
-  }
-
-  .footer p {
-    color: #666;
-    font-size: 0.9rem;
-  }
-
-  .footer-copyright {
-    border-top: 0.0625rem solid #ddd;
-    padding-top: 0.9375rem;
-    margin-top: 0.9375rem;
+  footer .text-center p {
+      font-size: 13px;
+      color: #333333;
   }
 
   /* Estilos responsivos */
