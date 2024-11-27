@@ -193,12 +193,12 @@ body {
       background-color: #0056b3;
   }
   /* Logos de marcas */
-  .brand-logos {
+.brand-logos {
     display: flex;
     justify-content: center;
-    gap: 1.875rem;
+    gap: 6rem;
     margin-bottom: 3.125rem;
-  }
+}
 
   .brand-logos img {
     width: 3.125rem;
@@ -397,3 +397,138 @@ body {
       text-align: center;
     }
   }
+
+ /* autos areas */
+
+/* Sección de Filtros */
+.filter-section {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.filter-section h3 {
+    color: #101422;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.filter-section .form-control {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.filter-section .btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.filter-section .btn-primary:hover {
+    background-color: #0056b3;
+}
+/* Card container */
+.cars-card {
+    background-color: #ffffff;
+    border-radius: 0px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    /* Para asegurar que todas las tarjetas tengan la misma altura */
+}
+
+.car-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Image wrapper */
+.car-image-wrapper {
+    width: 100%;
+    height: 180px;
+    /* Tamaño fijo para las imágenes */
+    overflow: hidden;
+    position: relative;
+}
+
+.car-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+}
+
+.car-card:hover .car-image {
+    transform: scale(1.1);
+}
+
+/* Card content */
+.car-content {
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.car-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--color-secundario);
+}
+
+.car-price {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+}
+
+/* Features list */
+.car-features {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.car-features li {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Actions */
+.car-actions .btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 5px;
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--color-primario);
+    color: var(--color-primario);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--color-primario);
+    color: #fff;
+}
+
+.btn-primary {
+    background-color: var(--color-primario);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}

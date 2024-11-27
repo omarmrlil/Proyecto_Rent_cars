@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Auto extends Model
 {
-    use HasFactory;
-    protected $table = 'autos';
 
+    use HasFactory;
+
+    protected $table = 'autos';
     protected $primaryKey = 'id_auto';
 
     protected $fillable = [
@@ -20,10 +21,14 @@ class Auto extends Model
         'matricula',
         'precio_por_dia',
         'foto_auto',
-        'kilometraje', // Asegúrate de agregar este campo
+        'kilometraje',
         'estado',
     ];
 
+    public function detalles()
+    {
+        return $this->hasOne(DetalleAuto::class, 'id_auto', 'id_auto');
+    }
 
     // Si no estás utilizando los campos created_at y updated_at
     public $timestamps = false;

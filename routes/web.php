@@ -79,7 +79,8 @@ Route::get('notificaciones/mis-notificaciones', [NotificacionController::class, 
 Route::post('notificaciones/{id}/marcar-visto', [NotificacionController::class, 'marcarVisto'])->name('notificaciones.marcarVisto');
 
 Route::get('/search_vehicles', [AutoController::class, 'search'])->name('search_vehicles');
-
+Route::get('/autos', [AutoController::class, 'index'])->name('autos.index');
+Route::get('/autos/{id}', [AutoController::class, 'show'])->name('autos.show');
 
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
