@@ -9,4 +9,10 @@ class MultimediaAuto extends Model
 {
     use HasFactory;
     protected $table = 'multimedia_autos';
+
+    public function auto()
+    {
+        return $this->belongsTo(Auto::class, 'id_auto');
+    }
+
 }

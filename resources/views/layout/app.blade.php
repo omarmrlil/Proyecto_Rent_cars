@@ -16,6 +16,8 @@
         <title>@yield('title', 'A&J Rent Cars')</title>
 
         <!-- External CSS (Bootstrap, Font Awesome, etc.) -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
@@ -34,13 +36,13 @@
             <span class="company-name">A&J Rent Cars</span>
         </div>
 
-        <!-- Menú de Navegación -->
-        <ul class="navbar-menu" role="menubar">
-            <li><a href="/" role="menuitem">Inicio</a></li>
-            <li><a href="/autos" role="menuitem">Autos</a></li>
-            <li><a href="#" role="menuitem">Servicio</a></li>
-            <li><a href="#" role="menuitem">Contacto</a></li>
-        </ul>
+       <!-- Menú de Navegación -->
+<ul class="navbar-menu" role="menubar">
+    <li><a href="{{ route('home') }}" role="menuitem">Inicio</a></li>
+    <li><a href="{{ route('autos.index') }}" role="menuitem">Autos</a></li>
+    <li><a href="{{ route('services') }}" role="menuitem">Servicios</a></li>
+    <li><a href="{{ route('contact') }}" role="menuitem">Contacto</a></li>
+</ul>
 
         <!-- Botones de Acción -->
         <div class="navbar-buttons">

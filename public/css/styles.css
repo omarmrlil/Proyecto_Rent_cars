@@ -532,3 +532,48 @@ body {
 .btn-primary:hover {
     background-color: #0056b3;
 }
+
+.car-details-section {
+    background-color: #f8f9fa;
+    padding: 50px 0;
+}
+
+.car-details-section .price {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.car-details-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.car-details-section ul li {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.car-details-section ul li i {
+    margin-right: 10px;
+    color: #007bff;
+}
+
+.car-details-section .btn-primary {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+
+.services-section i,
+.contact-section i {
+    margin-right: 10px;
+}
+
+.services-section .text-center {
+    margin-bottom: 30px;
+}
+
+.contact-section .form-group label {
+    font-weight: bold;
+}

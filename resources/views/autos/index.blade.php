@@ -60,7 +60,7 @@
                                 <li><i class="fa fa-snowflake"></i> {{ $auto->detalles->aire_acondicionado == 'sí' ? 'Sí' : 'No' }}</li>
                             </ul>
                             <div class="car-actions text-center">
-                                <a href="#" class="btn btn-outline-primary btn-sm">Más Detalles</a>
+                                <a href="{{ route('autos.show', $auto->id_auto) }}" class="btn btn-outline-secondary btn-sm">Más Detalles</a>
                                 <a href="#" class="btn btn-primary btn-sm">Reservar</a>
                             </div>
                         </div>

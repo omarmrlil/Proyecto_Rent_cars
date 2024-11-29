@@ -83,6 +83,7 @@ Route::get('/autos', [AutoController::class, 'index'])->name('autos.index');
 Route::get('/autos/{id}', [AutoController::class, 'show'])->name('autos.show');
 
 
+
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -114,5 +115,15 @@ Route::middleware([ 'role:empleado'])->prefix('empleado')->name('empleado.')->gr
     Route::get('mantenimientos', [MantenimientoController::class, 'index'])->name('mantenimientos.index');
     Route::get('perfil', [EmpleadoController::class, 'perfil'])->name('perfil');
 });
+
+
+Route::get('/servicios', function () {
+    return view('services');
+})->name('services');
+
+Route::get('/contacto', function () {
+    return view('contact');
+})->name('contact');
+
 
 

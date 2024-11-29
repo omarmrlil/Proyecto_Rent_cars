@@ -51,5 +51,10 @@ class Auto extends Model
     {
         return $this->belongsTo(TipoAuto::class, 'id_tipo');
     }
+    public function multimedia()
+    {
+        return $this->hasMany(MultimediaAuto::class, 'id_auto');
+    }
+
 
 }

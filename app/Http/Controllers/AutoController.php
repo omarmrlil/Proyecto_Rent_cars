@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Auto;
 use App\Models\MarcaAuto;
 use App\Models\TipoAuto;
+use App\Models\MultimediaAuto;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Storage;
 
 class AutoController extends Controller
@@ -126,12 +128,14 @@ class AutoController extends Controller
 
         return redirect()->route('autos.index')->with('success', 'Auto y sus detalles registrados exitosamente.');
     }
-    // Método para mostrar un auto específico (no es necesario si no necesitas una vista detallada)
+    // Método para mostrar un auto específico por su ID
     public function show($id)
     {
-        $auto = Auto::findOrFail($id);
+        $auto = Auto::with(['marca', 'tipo', 'detalles', 'multimedia'])->findOrFail($id);
         return view('autos.show', compact('auto'));
     }
+
+
 
     // Método para mostrar el formulario de edición de un auto
     public function edit($id)
@@ -212,4 +216,6 @@ class AutoController extends Controller
 
     return view('autos.index', compact('autos'));
 }
+
+
 }
