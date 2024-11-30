@@ -1,0 +1,676 @@
+:root {
+    --color-primario: #007bff;
+    /* Azul primario */
+    --color-secundario: #101422;
+    /* Color de texto oscuro */
+    --color-fondo: #FFFFFF;
+    /* Fondo claro */
+    --color-acento: #272B3B;
+    --color-btn-busqueda: #007bff;
+    /* Color para el botón de búsqueda */
+}
+
+/* Reset básico para evitar inconsistencias entre navegadores */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos Generales */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-secundario);
+    margin: 0;
+}
+
+/* Estilo para el menú activo */
+.nav-link.active {
+    font-weight: bold;
+    color: var(--color-primario) !important;
+}
+
+/* --- Navbar Activo (Indicador de página activa) --- */
+.nav-link.active::after {
+    content: '';
+    /* Línea indicadora debajo del enlace activo */
+    display: block;
+    width: 100%;
+    /* La línea cubre el ancho completo del enlace */
+    height: 2px;
+    /* Grosor de la línea */
+    background-color: var(--color-primario);
+    /* Color principal */
+    position: absolute;
+    bottom: -4px;
+    /* Espaciado debajo del texto */
+    left: 0;
+    /* Posición inicial a la izquierda */
+}
+
+/* --- Dropdown Menú (Estilo de la lista desplegable) --- */
+.navbar-nav .dropdown-menu {
+    border-radius: 0.5rem;
+    /* Bordes redondeados */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    /* Sombra ligera para destacar */
+}
+
+.navbar-nav .dropdown-menu a {
+    font-size: 0.9rem;
+    /* Tamaño de fuente */
+    color: var(--color-secundario);
+    /* Color del texto */
+    text-decoration: none;
+    /* Sin subrayado */
+}
+
+.navbar-nav .dropdown-menu a:hover {
+    background-color: var(--color-primario);
+    /* Cambia el fondo al color primario al pasar el ratón */
+    color: #fff;
+    /* Cambia el texto a blanco para contraste */
+}
+
+/* --- Estilo General del Navbar --- */
+.navbar {
+    display: flex;
+    /* Elementos alineados en fila */
+    justify-content: space-between;
+    /* Espaciado entre el logo y las opciones */
+    align-items: center;
+    /* Centra verticalmente los elementos */
+    padding: 0.625rem 1.25rem;
+    /* Espaciado interno */
+    background-color: var(--color-fondo);
+    /* Color de fondo */
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+    /* Sombra para profundidad */
+}
+
+.navbar .navbar-brand {
+    display: flex;
+    /* Alinea el logo y texto juntos */
+    align-items: center;
+    font-weight: bold;
+    /* Texto más grueso */
+    color: var(--color-secundario);
+    /* Color del texto */
+    text-decoration: none;
+    /* Sin subrayado */
+}
+
+.navbar .navbar-brand img {
+    margin-right: 10px;
+    /* Espaciado entre el logo y el texto */
+    height: 30px;
+    /* Tamaño del logo */
+}
+
+/* --- Lista de Navegación (Opciones del Menú) --- */
+.navbar-nav {
+    display: flex;
+    /* Alineación horizontal */
+    list-style: none;
+    /* Sin viñetas */
+    gap: 2rem;
+    /* Espaciado entre opciones */
+    margin-bottom: 0;
+    /* Sin márgenes adicionales */
+}
+
+.navbar-nav li a {
+    text-decoration: none;
+    /* Sin subrayado */
+    color: var(--color-secundario);
+    /* Color del texto */
+    font-size: 1rem;
+    /* Tamaño de fuente */
+    font-weight: 500;
+    /* Peso del texto */
+}
+
+.navbar-nav li a:hover {
+    color: var(--color-primario);
+    /* Cambia el texto al color primario al pasar el ratón */
+}
+
+/* --- Estilo Activo del Navbar --- */
+.nav-link.active {
+    font-weight: bold;
+    /* Resalta el enlace activo */
+    color: var(--color-primario);
+    /* Color primario */
+}
+
+/* --- Botón para dispositivos móviles --- */
+.navbar-toggler {
+    border: none;
+    /* Sin borde */
+    outline: none;
+    /* Sin contorno al hacer clic */
+}
+
+/* --- Dropdown del Cliente (Menú desplegable) --- */
+.navbar-nav.ms-auto {
+    display: flex;
+    align-items: center;
+    /* Centra verticalmente los elementos */
+}
+
+.navbar-nav .nav-item.dropdown .nav-link {
+    display: flex;
+    align-items: center;
+    /* Ícono y texto alineados */
+    gap: 0.5rem;
+    /* Espaciado entre ícono y texto */
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.navbar-nav .nav-item.dropdown .nav-link i {
+    font-size: 1.2rem;
+    /* Tamaño del ícono */
+}
+
+.navbar-nav .dropdown-menu {
+    border-radius: 0.5rem;
+    /* Bordes redondeados */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    /* Sombra */
+}
+
+.navbar-nav .dropdown-menu a {
+    font-size: 0.9rem;
+    /* Tamaño de fuente */
+    color: var(--color-secundario);
+    /* Color del texto */
+}
+
+.navbar-nav .dropdown-menu a:hover {
+    background-color: var(--color-primario);
+    /* Fondo al pasar el ratón */
+    color: #fff;
+    /* Texto blanco */
+}
+
+ /* Sección Principal de Alquiler */
+ .hero {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     padding: 40px;
+     gap: 30px;
+ }
+
+ .hero-content {
+     flex: 1;
+     padding: 20px;
+ }
+
+ .hero-content h1 {
+     font-size: 2.5em;
+     color: var(--color-secundario);
+ }
+
+ .hero-content p {
+     color: #666666;
+     font-size: 1em;
+     margin: 20px 0;
+ }
+
+ .hero-content .btn-primary {
+     background-color: var(--color-primario);
+     color: #ffffff;
+     padding: 10px 20px;
+     border-radius: 5px;
+     text-decoration: none;
+     font-weight: bold;
+ }
+
+ .hero-content .btn-primary:hover {
+     background-color: #0056b3;
+ }
+
+ .hero-image img {
+     width: 100%;
+     border-radius: 8px;
+     max-width: 500px;
+     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+ }
+
+ /* Search Section */
+ .search-section {
+     text-align: center;
+     padding: 50px 20px;
+     background-color: #f8f9fa;
+ }
+
+ .search-container {
+     max-width: 800px;
+     margin: 0 auto;
+     background-color: #ffffff;
+     padding: 30px;
+     border-radius: 8px;
+     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+ }
+
+ .search-container h2 {
+     font-size: 2em;
+     color: var(--color-secundario);
+     margin-bottom: 20px;
+ }
+
+ .search-form .input-group {
+     display: flex;
+     gap: 10px;
+     flex-wrap: wrap;
+ }
+
+ .search-form .form-control {
+     flex: 1;
+     padding: 10px;
+     border: 1px solid #ddd;
+     border-radius: 5px;
+ }
+
+ .search-form .btn-search {
+     background-color: var(--color-btn-busqueda);
+     color: #fff;
+     border: none;
+     padding: 10px 20px;
+     border-radius: 5px;
+     font-weight: bold;
+     cursor: pointer;
+ }
+
+ .search-form .btn-search:hover {
+     background-color: #0056b3;
+ }
+
+ /* Logos de marcas */
+ .brand-logos {
+     display: flex;
+     justify-content: center;
+     gap: 6rem;
+     margin-bottom: 3.125rem;
+ }
+
+ .brand-logos img {
+     width: 3.125rem;
+     opacity: 0.5;
+     transition: opacity 0.3s;
+ }
+
+ .brand-logos img:hover {
+     opacity: 1;
+ }
+
+ /* Coches destacados */
+ .featured-cars {
+     text-align: center;
+     margin-bottom: 2.5rem;
+ }
+
+ .featured-cars h2 {
+     font-size: 2rem;
+     margin-bottom: 1.25rem;
+ }
+
+ .car-list {
+     display: flex;
+     justify-content: center;
+     flex-wrap: wrap;
+     gap: 1.25rem;
+ }
+
+ .car-card {
+     background-color: #fff;
+     border-radius: 0.625rem;
+     box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+     padding: 1.25rem;
+     width: 11.25rem;
+     text-align: center;
+ }
+
+ .car-card img {
+     width: 100%;
+     border-radius: 0.3125rem;
+     margin-bottom: 0.625rem;
+ }
+
+ .car-card h3 {
+     font-size: 1.2rem;
+     margin-bottom: 0.625rem;
+ }
+
+ .car-card p {
+     font-size: 1rem;
+     color: #888;
+     margin-bottom: 0.9375rem;
+ }
+
+ .car-card button {
+     background-color: #e0e0e0;
+     border: none;
+     padding: 0.625rem 1.25rem;
+     font-size: 1rem;
+     cursor: pointer;
+     border-radius: 0.3125rem;
+     transition: background-color 0.3s;
+ }
+
+ .car-card button:hover {
+     background-color: #ccc;
+ }
+
+ /* Por qué alquilar con nosotros */
+ .why-us {
+     margin-top: 2.5rem;
+     padding: 3.75rem;
+     background-color: #fff;
+     border-radius: 0.625rem;
+     box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+ }
+
+ .why-us-content {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+ }
+
+ .why-us-text {
+     max-width: 40%;
+ }
+
+ .why-us h2 {
+     font-size: 1.8rem;
+     margin-bottom: 0.9375rem;
+ }
+
+ .why-us p {
+     font-size: 1rem;
+     color: #555;
+     margin-bottom: 1.25rem;
+     line-height: 1.6;
+ }
+
+ .why-us button {
+     background-color: #007bff;
+     color: #fff;
+     border: none;
+     padding: 0.75rem 1.5625rem;
+     font-size: 1rem;
+     cursor: pointer;
+     border-radius: 0.3125rem;
+     transition: background-color 0.3s;
+ }
+
+ .why-us button:hover {
+     background-color: #0056b3;
+ }
+
+ .why-us-image img {
+     max-width: 31.25rem;
+     width: 100%;
+     border-radius: 0.625rem;
+ }
+/* Pie de Página */
+footer {
+    background-color: #FFFFFF;
+    /* Cambié a blanco para mayor contraste */
+    color: #333333;
+    padding: 50px 0;
+}
+
+footer h5 {
+    font-weight: bold;
+    color: #101422;
+    /* Color oscuro para mayor contraste */
+    margin-bottom: 10px;
+}
+
+footer p {
+    font-size: 14px;
+    color: #666666;
+}
+
+footer .social-icons {
+    margin-top: 15px;
+}
+
+footer .social-icons a {
+    color: #101422;
+    /* Color oscuro para iconos */
+    font-size: 18px;
+    margin-right: 15px;
+    transition: color 0.3s;
+}
+
+footer .social-icons a:hover {
+    color: #007bff;
+    /* Color de acento al pasar el mouse */
+}
+
+.footer-section .contact-info i {
+    font-size: 18px;
+    color: #101422;
+    margin-right: 8px;
+}
+
+footer hr {
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+footer .text-center p {
+    font-size: 13px;
+    color: #333333;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .navbar-menu {
+        display: none;
+        /* Oculta el menú en pantallas pequeñas */
+    }
+
+    .rental-intro {
+        flex-direction: column;
+        padding: 1.25rem;
+    }
+
+    .search-form {
+        flex-direction: column;
+    }
+
+    .why-us-content {
+        flex-direction: column;
+    }
+
+    .footer-info {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+/* autos areas */
+
+/* Sección de Filtros */
+.filter-section {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.filter-section h3 {
+    color: #101422;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.filter-section .form-control {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.filter-section .btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.filter-section .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Card container */
+.cars-card {
+    background-color: #ffffff;
+    border-radius: 0px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    /* Para asegurar que todas las tarjetas tengan la misma altura */
+}
+
+.car-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Image wrapper */
+.car-image-wrapper {
+    width: 100%;
+    height: 180px;
+    /* Tamaño fijo para las imágenes */
+    overflow: hidden;
+    position: relative;
+}
+
+.car-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+}
+
+.car-card:hover .car-image {
+    transform: scale(1.1);
+}
+
+/* Card content */
+.car-content {
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.car-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--color-secundario);
+}
+
+.car-price {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+}
+
+/* Features list */
+.car-features {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.car-features li {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Actions */
+.car-actions .btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 5px;
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--color-primario);
+    color: var(--color-primario);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--color-primario);
+    color: #fff;
+}
+
+.btn-primary {
+    background-color: var(--color-primario);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.car-details-section {
+    background-color: #f8f9fa;
+    padding: 50px 0;
+}
+
+.car-details-section .price {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.car-details-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.car-details-section ul li {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.car-details-section ul li i {
+    margin-right: 10px;
+    color: #007bff;
+}
+
+.car-details-section .btn-primary {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+
+.services-section i,
+.contact-section i {
+    margin-right: 10px;
+}
+
+.services-section .text-center {
+    margin-bottom: 30px;
+}
+
+.contact-section .form-group label {
+    font-weight: bold;
+}

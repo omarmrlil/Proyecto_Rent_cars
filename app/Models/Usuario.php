@@ -39,12 +39,20 @@ class Usuario extends Authenticatable
     // Relación con Cliente
     public function cliente()
     {
-        return $this->hasOne(Cliente::class, 'id_usuario');
+        return $this->hasOne(Cliente::class, 'id_usuario', 'id_usuario');
     }
-
     // Relación con Empleado
     public function empleado()
     {
         return $this->hasOne(Empleado::class, 'id_usuario');
+
     }
+
+    // Relación con Notificaciones
+    public function notificaciones()
+    {
+        return $this->hasMany(Notificacion::class, 'id_usuario', 'id_usuario');
+    }
+
+
 }

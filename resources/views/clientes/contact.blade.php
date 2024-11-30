@@ -50,13 +50,13 @@
                         <a class="nav-link {{ Request::routeIs('cliente.dashboard') ? 'active' : '' }}" href="{{ route('cliente.dashboard') }}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::routeIs('clientes.autos') ?  : '' }}" href="{{ route('cliente.autos') }}">Autos</a>
+                        <a class="nav-link {{ Request::routeIs('cliente.autos') ? 'active' : '' }}" href="{{ route('cliente.autos') }}">Autos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::routeIs('clientes.servicios') ? '' : '' }}" href="{{ route('cliente.servicios') }}">Servicios</a>
+                        <a class="nav-link {{ Request::routeIs('cliente.servicios') ? 'active' : '' }}" href="{{ route('cliente.servicios') }}">Servicios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::routeIs('clientes.contact') ? '' : '' }}" href="{{ route('cliente.contact') }}">Contacto</a>
+                        <a class="nav-link {{ Request::routeIs('cliente.contact') ? 'active' : '' }}" href="{{ route('cliente.contact') }}">Contacto</a>
                     </li>
                 </ul>
 
@@ -69,7 +69,7 @@
 
         <!-- Opciones del Dropdown -->
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="clienteMenu">
-            <li><a class="dropdown-item" href="{{ route('cliente.mi_cuenta') }}">Mi Cuenta</a></li>
+            <li><a class="dropdown-item" href="#">Mi Cuenta</a></li>
             <li><a class="dropdown-item" href="#">Mis Alquileres</a></li>
             <li><a class="dropdown-item" href="#">Historial</a></li>
             <li><a class="dropdown-item" href="#">Configuración</a></li>
@@ -90,112 +90,63 @@
         </div>
     </nav>
 </header>
+
 <body>
 
-     <!-- cuerpo de la pagina-->
-    <!-- Sección Principal de Alquiler -->
+    <!-- cuerpo de la pagina-->
+    <section class="contact-section py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Contáctanos</h2>
+            <p class="text-center mb-5">Estamos aquí para ayudarte. Completa el formulario o utiliza los datos de contacto
+                para comunicarte con nosotros.</p>
 
-    <section class="hero">
-    <div class="hero-content">
-        <h1>¿Busca un auto para alquilar?</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <a href="{{ route('cliente.autos') }}" class="btn btn-primary">Reservar</a>
-    </div>
-    <div class="hero-image">
-        <img src="{{ asset('images/src/img/logos/imagen de sesion 1.png') }}" alt="Auto en la playa">
-    </div>
-</section>
+            <div class="row">
+                <!-- Información de Contacto -->
+                <div class="col-md-6">
+                    <h4>Información de Contacto</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <i class="fa fa-map-marker-alt text-primary"></i> Dirección: Calle Principal #123, Santo Domingo
+                        </li>
+                        <li class="mb-3">
+                            <i class="fa fa-phone-alt text-primary"></i> Teléfono: +1 (809) 555-1234
+                        </li>
+                        <li class="mb-3">
+                            <i class="fa fa-envelope text-primary"></i> Correo: contacto@ajrental.com
+                        </li>
+                        <li>
+                            <i class="fa fa-clock text-primary"></i> Horario: Lunes a Viernes, 8:00 AM - 6:00 PM
+                        </li>
+                    </ul>
+                </div>
 
-<!-- Barra de búsqueda -->
-<section class="search-section">
-    <div class="search-container">
-        <h2>Busca tu auto ideal aquí!!</h2>
-<form action="{{ route('cliente.search') }}" method="GET" class="search-form">
-    @csrf
-    <div class="input-group">
-        <input type="text" name="marca" placeholder="Marca" class="form-control" value="{{ request('marca') }}">
-        <input type="text" name="modelo" placeholder="Modelo" class="form-control" value="{{ request('modelo') }}">
-        <input type="number" name="precio_max" placeholder="Precio" class="form-control" value="{{ request('precio_max') }}">
-        <button type="submit" class="btn btn-search">Buscar</button>
-    </div>
-</form>
+                <!-- Formulario de Contacto -->
+                <div class="col-md-6">
+                    <h4>Envíanos un Mensaje</h4>
+                    <form action="" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Tu Nombre"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Tu Correo"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mensaje" class="form-label">Mensaje</label>
+                            <textarea class="form-control" id="mensaje" name="mensaje" rows="5" placeholder="Tu Mensaje" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
 
-    </div>
-</section>
-
-
-    <!-- Sección de Logos de Marcas -->
-    <section class="brand-logos">
-        <img src="{{asset('images/src/img/logos/bmw.jpg')}}" alt="BMW">
-        <img src="{{asset('images/src/img/logos/lexus.png')}}" alt="Lexus">
-        <img src="{{asset('images/src/img/logos/mercedes.png')}}" alt="Mercedes">
-        <img src="{{asset('images/src/img/logos/honda.png')}}" alt="Honda">
-        <img src="{{asset('images/src/img/logos/toyota.png')}}" alt="Toyota">
-        <img src="{{asset('images/src/img/logos/nissan.svg')}}" alt="Nissan">
-        <img src="{{asset('images/src/img/logos/kia.png')}}" alt="Kia">
-    </section>
-
-    <!-- Sección de Coches Destacados -->
-    <section class="featured-cars">
-        <h2>Coches Destacados</h2>
-        <div class="car-list">
-
-            <!-- Cada coche destacado -->
-            <div class="car-card">
-                <img src="{{asset('images/src/img/autos/2021 BMW M5.jpg')}}" alt="2021 BMW M5">
-                <h3>2021 BMW M5</h3>
-                <p>$200/day</p>
-                <button>Rentar</button>
-            </div>
-
-            <div class="car-card">
-                <img src="{{asset('images/src/img/autos/2019 Tesla Model X.jpg')}}" alt="2019 Tesla Model X">
-                <h3>2019 Tesla Model X</h3>
-                <p>$250/day</p>
-                <button>Rentar</button>
-            </div>
-
-            <div class="car-card">
-                <img src="{{asset('images/src/img/autos/2018 Ferrari 488 Spider.jpg')}}" alt="2018 Ferrari 488 Spider">
-                <h3>2018 Ferrari 488 Spider</h3>
-                <p>$300/day</p>
-                <button>Rentar</button>
-            </div>
-
-            <div class="car-card">
-                <img src="{{asset('images/src/img/autos/2020 Lamborghini Urus.jpg')}}" alt="2020 Lamborghini Urus">
-                <h3>2020 Lamborghini Urus</h3>
-                <p>$350/day</p>
-                <button>Rentar</button>
-            </div>
-
-            <div class="car-card">
-                <img src="{{asset('images/src/img/autos/2017 Porsche 911 GT3 RS.jpeg')}}" alt="2017 Porsche 911 GT3 RS">
-                <h3>2017 Porsche 911 GT3 RS</h3>
-                <p>$400/day</p>
-                <button>Rentar</button>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Sección de Por qué alquilar con nosotros -->
-    <section class="why-us">
-        <div class="why-us-content">
-
-            <!-- Contenido textual alineado a la izquierda -->
-            <div class="why-us-text">
-                <h2>¿Por qué alquilar con Nosotros?</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mi ipsum, dapibus et rhoncus eget,
-                    euismod quis metus. Nullam vitae orci sit amet elit dictum consectetur.</p>
-                <button onclick="window.location.href='{{ route('cliente.autos') }}';" >Reserva ahora</button>
-            </div>
-
-            <!-- Imagen del auto alineada a la derecha -->
-            <div class="why-us-image">
-                <img src="{{asset('images/src/img/autos/sesion de por que arquilar con nosotros.png')}}" alt="Imagen de Auto">
-            </div>
-        </div>
-    </section>
 
 </body>
 
@@ -235,11 +186,9 @@
 
 
         <!-- External JS Scripts (Bootstrap, Font Awesome, etc.) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-QF0g3OAO3BzabXzj5S5AzlOjgjoxD9BZmS4wg1vtJrbhxwyy3aWYNJlWyfHVjPiY" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYe0KI6NzAsfrg2G+idk8Ns2fL3R77SyJHYQWVuWTZIjvoE5RFYYUOdQ0Pxaj+T" crossorigin="anonymous"></script>
-
 
         <!-- Custom Scripts -->
         <script src="{{ asset('js/scripts.js') }}"></script>

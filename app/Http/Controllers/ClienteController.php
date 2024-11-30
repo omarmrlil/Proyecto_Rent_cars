@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use App\Models\Usuario;
+use App\Models\Alquiler;
+use App\Models\Notificacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 class ClienteController extends Controller
 {
     public function index()
@@ -14,6 +17,34 @@ class ClienteController extends Controller
         $usuario = Auth::user();
         $clientes = Cliente::with('usuario')->get();
         return view('clientes.index', compact('clientes', 'usuario'));
+    }
+    public function show($id)
+    {
+
+        $cliente = Cliente::findOrFail($id);
+
+
+        return view('cliente.show', compact('cliente'));
+    }
+
+    public function autos()
+    {
+        // Obtener todos los autos con sus relaciones necesarias
+        $autos = \App\Models\Auto::with(['marca', 'detalles'])->get();
+
+        // Retornar la vista con los autos
+        return view('clientes.autos', compact('autos'));
+    }
+
+
+    public function servicios()
+    {
+        return view('clientes.servicios');
+    }
+
+    public function contact()
+    {
+        return view('clientes.contact');
     }
     public function create()
     {
@@ -97,4 +128,45 @@ class ClienteController extends Controller
         $cliente->delete();
         return redirect()->route('clientes.index')->with('success', 'Cliente eliminado exitosamente.');
     }
+    public function showAutoCliente($id)
+    {
+        // Obtener el auto con las relaciones necesarias
+        $auto = \App\Models\Auto::with(['marca', 'detalles', 'multimedia'])->findOrFail($id);
+
+        // Cargar la vista correcta
+        return view('clientes.show', compact('auto'));
+    }
+
+    public function search(Request $request)
+    {
+        // Crear una consulta base para los autos
+        $query = \App\Models\Auto::with('marca', 'detalles');
+
+        // Filtrar por marca
+        if ($request->filled('marca')) {
+            $query->whereHas('marca', function ($q) use ($request) {
+                $q->where('nombre_marca', 'like', '%' . $request->marca . '%');
+            });
+        }
+
+        // Filtrar por modelo
+        if ($request->filled('modelo')) {
+            $query->where('modelo', 'like', '%' . $request->modelo . '%');
+        }
+
+        // Filtrar por precio máximo
+        if ($request->filled('precio_max')) {
+            $query->where('precio_por_dia', '<=', $request->precio_max);
+        }
+
+        // Obtener los resultados de la búsqueda
+        $autos = $query->get();
+
+        // Retornar la vista con los resultados
+        return view('clientes.search_results', compact('autos'));
+    }
+
+
+
 }
+

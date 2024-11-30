@@ -102,12 +102,32 @@ Route::middleware(['role:administrador'])->prefix('admin')->name('admin.')->grou
 });
 
 // Rutas protegidas por middleware `cliente` para el Dashboard del Cliente
+// Rutas protegidas para los clientes
 Route::middleware(['role:cliente'])->prefix('cliente')->name('cliente.')->group(function () {
     Route::get('dashboard', [ClienteController::class, 'index'])->name('dashboard');
-    Route::get('perfil', [ClienteController::class, 'perfil'])->name('perfil');
-    Route::get('alquileres', [ClienteController::class, 'alquileres'])->name('alquileres');
-    Route::post('alquileres/reservar', [ClienteController::class, 'reservar'])->name('reservar');
+    Route::get('autos', [ClienteController::class, 'autos'])->name('autos');
+    Route::get('servicios', [ClienteController::class, 'servicios'])->name('servicios');
+    Route::get('contact', [ClienteController::class, 'contact'])->name('contact');
+    Route::get('autos/{id}', [ClienteController::class, 'showAutoCliente'])->name('autos.show');
+    Route::get('/search', [ClienteController::class, 'search'])->name('search');
+
+    // Mi Cuenta
+    Route::get('mi-cuenta', [ClienteController::class, 'miCuenta'])->name('mi_cuenta');
+    Route::post('mi-cuenta/update', [ClienteController::class, 'updateProfile'])->name('update_profile');
+    Route::post('mi-cuenta/password', [ClienteController::class, 'updatePassword'])->name('update_password');
+
+    // Historial de alquileres
+    Route::get('historial', [ClienteController::class, 'historialAlquileres'])->name('historial');
+
+    // Métodos de Pago
+    Route::get('metodos-pago', [ClienteController::class, 'listarMetodosPago'])->name('metodos_pago');
+    Route::post('metodos-pago', [ClienteController::class, 'agregarMetodoPago'])->name('agregar_metodo_pago');
+
+    // Notificaciones
+    Route::get('notificaciones', [ClienteController::class, 'getNotificaciones'])->name('notificaciones');
 });
+
+
 
 // Rutas protegidas por middleware `empleado` para el Dashboard del Empleado
 Route::middleware([ 'role:empleado'])->prefix('empleado')->name('empleado.')->group(function () {
@@ -115,6 +135,7 @@ Route::middleware([ 'role:empleado'])->prefix('empleado')->name('empleado.')->gr
     Route::get('mantenimientos', [MantenimientoController::class, 'index'])->name('mantenimientos.index');
     Route::get('perfil', [EmpleadoController::class, 'perfil'])->name('perfil');
 });
+
 
 
 Route::get('/servicios', function () {
