@@ -3,6 +3,10 @@
 @section('content') <!--Define el contenido que será colocado en la sección content del layout base.-->
 
 <!-- Sección de Filtros -->
+
+<div class="d-flex justify-content-end mb-3">
+    <a href="{{ route('autos.create') }}" class="btn btn-success">Añadir Vehículo</a>
+</div>
 <section class="filter-section py-4 bg-light">
     <div class="container">
         <h3 class="text-center mb-4">Búsqueda Rapida!!</h3>

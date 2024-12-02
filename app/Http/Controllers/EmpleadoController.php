@@ -32,6 +32,8 @@ class EmpleadoController extends Controller
         Empleado::create($request->all());
 
         return redirect()->route('empleados.index')->with('success', 'Empleado creado exitosamente.');
+
+
     }
 
     public function edit($id)
