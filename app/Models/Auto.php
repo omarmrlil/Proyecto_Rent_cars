@@ -44,8 +44,10 @@ class Auto extends Model
     }
     public function marca()
     {
-        return $this->belongsTo(MarcaAuto::class, 'id_marca');
+        return $this->belongsTo(MarcaAuto::class, 'id_marca', 'id_marca');
     }
+
+
 
     public function tipo()
     {

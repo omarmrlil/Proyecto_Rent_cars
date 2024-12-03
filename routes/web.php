@@ -101,7 +101,6 @@ Route::middleware(['role:administrador'])->prefix('admin')->name('admin.')->grou
     Route::get('notificaciones', [AdminController::class, 'notificaciones'])->name('notificaciones');
 });
 
-// Rutas protegidas por middleware `cliente` para el Dashboard del Cliente
 // Rutas protegidas para los clientes
 Route::middleware(['role:cliente'])->prefix('cliente')->name('cliente.')->group(function () {
     Route::get('dashboard', [ClienteController::class, 'index'])->name('dashboard');
@@ -113,18 +112,29 @@ Route::middleware(['role:cliente'])->prefix('cliente')->name('cliente.')->group(
 
     // Mi Cuenta
     Route::get('mi-cuenta', [ClienteController::class, 'miCuenta'])->name('mi_cuenta');
-    Route::post('mi-cuenta/update', [ClienteController::class, 'updateProfile'])->name('update_profile');
-    Route::post('mi-cuenta/password', [ClienteController::class, 'updatePassword'])->name('update_password');
+    Route::post('update-profile', [ClienteController::class, 'updateProfile'])->name('updateProfile');
+    Route::post('update-password', [ClienteController::class, 'updatePassword'])->name('updatePassword');
 
-    // Historial de alquileres
-    Route::get('historial', [ClienteController::class, 'historialAlquileres'])->name('historial');
 
-    // Métodos de Pago
-    Route::get('metodos-pago', [ClienteController::class, 'listarMetodosPago'])->name('metodos_pago');
-    Route::post('metodos-pago', [ClienteController::class, 'agregarMetodoPago'])->name('agregar_metodo_pago');
+    Route::post('cliente/autos/{id}/reservar', [ClienteController::class, 'reservarAuto'])->name('autos.reservar');
+    Route::get('autos', [ClienteController::class, 'autos'])->name('autos');
+    Route::get('cliente/autos/{id}/alquiler', [ClienteController::class, 'mostrarFormularioAlquiler'])->name('autos.alquiler');
+    Route::post('cliente/autos/{id}/alquiler', [ClienteController::class, 'procesarAlquiler'])->name('autos.procesar_alquiler');
+
+
+    Route::get('cliente/factura/{id}', [ClienteController::class, 'verFactura'])->name('factura');
+
+
+    Route::get('cliente/mis-alquileres', [ClienteController::class, 'misAlquileres'])->name('mis_alquileres');
+
+    Route::get('historial-pagos', [ClienteController::class, 'historialPagos'])->name('historial_pagos');
+
+    // historial
+    Route::get('historial', [ClienteController::class, 'historial'])->name('historial');
 
     // Notificaciones
     Route::get('notificaciones', [ClienteController::class, 'getNotificaciones'])->name('notificaciones');
+
 });
 
 

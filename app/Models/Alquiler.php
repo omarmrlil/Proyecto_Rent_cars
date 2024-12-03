@@ -29,10 +29,7 @@ class Alquiler extends Model
     {
         return $this->belongsTo(Cliente::class, 'id_cliente');
     }
-    public function auto()
-    {
-        return $this->belongsTo(Auto::class, 'id_auto');
-    }
+
     public function pago()
     {
         return $this->hasOne(Pago::class, 'id_alquiler');
@@ -41,6 +38,14 @@ class Alquiler extends Model
     public function factura()
     {
         return $this->hasOne(Factura::class, 'id_alquiler');
+    }
+    public function auto()
+    {
+        return $this->belongsTo(Auto::class, 'id_auto', 'id_auto');
+    }
+    public function marca()
+    {
+        return $this->belongsTo(MarcaAuto::class, 'id_marca', 'id_marca');
     }
 
 }
