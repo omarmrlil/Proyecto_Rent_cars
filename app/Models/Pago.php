@@ -28,4 +28,6 @@ class Pago extends Model
         return $this->belongsTo(Alquiler::class, 'id_alquiler');
     }
 
+
+
 }

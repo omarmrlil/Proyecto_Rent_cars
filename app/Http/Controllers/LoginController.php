@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use App\Models\Usuario;
 
 class LoginController extends Controller
 {
@@ -20,7 +21,7 @@ class LoginController extends Controller
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
-
+        $usuario = Usuario::where('email', $request->email)->with('cliente')->first();
         $usuario = DB::table('usuarios')->where('email', $request->email)->first();
 
         if ($usuario && $request->password === $usuario->password) {
@@ -51,7 +52,6 @@ class LoginController extends Controller
             ]);
         }
     }
-
 
     public function logout()
     {

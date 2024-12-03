@@ -47,10 +47,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::routeIs('cliente.dashboard') ? '' : '' }}" href="{{ route('cliente.dashboard') }}">Inicio</a>
+                        <a class="nav-link {{ Request::routeIs('cliente.dashboard') ? 'active' : '' }}" href="{{ route('cliente.dashboard') }}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::routeIs('clientes.autos') ?  : 'active' }}" href="{{ route('cliente.autos') }}">Autos</a>
+                        <a class="nav-link {{ Request::routeIs('clientes.autos') ?  : '' }}" href="{{ route('cliente.autos') }}">Autos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ Request::routeIs('clientes.servicios') ? '' : '' }}" href="{{ route('cliente.servicios') }}">Servicios</a>
@@ -69,7 +69,7 @@
 
         <!-- Opciones del Dropdown -->
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="clienteMenu">
-            <li><a class="dropdown-item" href="#">Mi Cuenta</a></li>
+            <li><a class="dropdown-item" href="{{ route('cliente.mi_cuenta') }}">Mi Cuenta</a></li>
             <li><a class="dropdown-item" href="#">Mis Alquileres</a></li>
             <li><a class="dropdown-item" href="#">Historial</a></li>
             <li><a class="dropdown-item" href="#">Configuración</a></li>
@@ -92,86 +92,86 @@
 </header>
 <body>
 
-     <!-- cuerpo de la pagina-->
-    <!-- Sección Principal de Alquiler -->
 
-  <!-- Sección de Filtros -->
-<section class="filter-section py-4 bg-light">
-    <div class="container">
-        <h3 class="text-center mb-4">Búsqueda Rapida!!</h3>
-        <form action="{{ route('autos.index') }}" method="GET" class="row g-3 justify-content-center">
-            <div class="col-md-3">
-                <input type="text" name="marca" class="form-control" placeholder="Marca (e.g., Toyota)" value="{{ request('marca') }}">
+<div class="container mt-5">
+        <h1 class="text-center mb-4">Mi Cuenta</h1>
+
+        <!-- Mensajes de éxito o error -->
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
             </div>
-            <div class="col-md-3">
-                <input type="text" name="modelo" class="form-control" placeholder="Modelo (e.g., Corolla)" value="{{ request('modelo') }}">
+        @endif
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
-            <div class="col-md-2">
-                <select name="transmision" class="form-control">
-                    <option value="">Transmisión</option>
-                    <option value="manual" {{ request('transmision') == 'manual' ? 'selected' : '' }}>Manual</option>
-                    <option value="automatica" {{ request('transmision') == 'automatica' ? 'selected' : '' }}>Automática</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <select name="tipo_combustible" class="form-control">
-                    <option value="">Combustible</option>
-                    <option value="gasolina" {{ request('tipo_combustible') == 'gasolina' ? 'selected' : '' }}>Gasolina</option>
-                    <option value="diesel" {{ request('tipo_combustible') == 'diesel' ? 'selected' : '' }}>Diésel</option>
-                    <option value="electrico" {{ request('tipo_combustible') == 'electrico' ? 'selected' : '' }}>Eléctrico</option>
-                    <option value="hibrido" {{ request('tipo_combustible') == 'hibrido' ? 'selected' : '' }}>Híbrido</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <input type="number" name="precio_max" class="form-control" placeholder="Precio Máximo ($)" value="{{ request('precio_max') }}">
-            </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100">Filtrar</button>
-            </div>
-        </form>
-    </div>
-</section>
-<!-- Lista de Autos -->
-<section class="cars-section py-5">
-    <div class="container">
-        <h2 class="text-center mb-4">Encuentra tu Auto Perfecto</h2>
+        @endif
+
         <div class="row">
-            @forelse ($autos as $auto)
-                <div class="col-md-4 mb-4">
-                    <div class="cars-card shadow-sm">
-                        <div class="car-image-wrapper">
-                            <img src="{{ asset('storage/' . $auto->foto_auto) }}" alt="{{ $auto->modelo }}" class="car-image">
-                        </div>
-                        <div class="car-content">
-                            <h4 class="car-title">{{ $auto->marca->nombre_marca ?? 'N/A' }} {{ $auto->modelo }}</h4>
-                            <p class="car-price text-primary font-weight-bold">${{ $auto->precio_por_dia }} / día</p>
-                            <ul class="car-features list-unstyled d-flex justify-content-between px-3">
-                                <li><i class="fa fa-cogs"></i> {{ ucfirst($auto->detalles->transmision ?? 'N/A') }}</li>
-                                <li><i class="fa fa-gas-pump"></i> {{ ucfirst($auto->detalles->tipo_combustible ?? 'N/A') }}</li>
-                                <li><i class="fa fa-chair"></i> {{ $auto->detalles->numero_asientos ?? 'N/A' }}</li>
-                                <li><i class="fa fa-snowflake"></i> {{ $auto->detalles->aire_acondicionado == 'sí' ? 'Sí' : 'No' }}</li>
-                            </ul>
-                            <div class="car-actions text-center">
-                                <a href="{{ route('cliente.autos.show', $auto->id_auto) }}" class="btn btn-outline-secondary btn-sm">Más Detalles</a>
-                                <a href="{{ route('cliente.autos.alquiler', $auto->id_auto) }}" class="btn btn-primary btn-sm">Reservar</a>
-<form id="reservar-form-{{ $auto->id_auto }}" action="{{ route('cliente.autos.reservar', $auto->id_auto) }}" method="POST" style="display: none;">
+            <!-- Perfil -->
+            <form method="POST" action="{{ route('cliente.updateProfile') }}">
     @csrf
+    <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" name="nombre" id="nombre" class="form-control" value="{{ session('usuario')->nombre }}" required>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Correo Electrónico</label>
+        <input type="email" name="email" id="email" class="form-control" value="{{ session('usuario')->email }}" required>
+    </div>
+
+    <div class="form-group">
+        <label for="telefono">Teléfono</label>
+        <input type="text" name="telefono" id="telefono" class="form-control" value="{{ session('usuario')->cliente->telefono ?? '' }}">
+    </div>
+
+    <div class="form-group">
+        <label for="direccion">Dirección</label>
+        <input type="text" name="direccion" id="direccion" class="form-control" value="{{ session('usuario')->cliente->direccion ?? '' }}">
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Actualizar Perfil</button>
 </form>
-                            </div>
-                        </div>
+
+            <!-- Cambiar Contraseña -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">
+                        <h4>Cambiar Contraseña</h4>
+<form method="POST" action="{{ route('cliente.updatePassword') }}">
+    @csrf
+    <div class="form-group">
+        <label for="current_password">Contraseña Actual</label>
+        <input type="password" name="current_password" id="current_password" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="new_password">Nueva Contraseña</label>
+        <input type="password" name="new_password" id="new_password" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="new_password_confirmation">Confirmar Nueva Contraseña</label>
+        <input type="password" name="new_password_confirmation" id="new_password_confirmation" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Actualizar Contraseña</button>
+</form>
+
                     </div>
                 </div>
-            @empty
-                <div class="col-12 text-center">
-                    <p>No se encontraron autos con los filtros seleccionados.</p>
-                </div>
-            @endforelse
+            </div>
         </div>
     </div>
-</section>
 </body>
 
-     <!-- Sección del Pie de Página -->
+    <!-- Sección del Pie de Página -->
     <footer class="bg-light text-dark py-4">
     <div class="container">
         <div class="row text-center text-md-start">
@@ -203,9 +203,6 @@
             <p>&copy; 2024 A&J Rent Cars. Todos los derechos reservados.</p>
         </div>
     </div>
-
-
-
 </footer>
 
 
