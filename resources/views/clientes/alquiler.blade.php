@@ -13,7 +13,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Title Section -->
-        <title>@yield('title', 'A&J Rent Cars')</title>
+        <title>@yield('title', 'Alquiler | A&J Rent Cars')</title>
 
         <!-- External CSS (Bootstrap, Font Awesome, etc.) -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
@@ -69,13 +69,13 @@
 
         <!-- Opciones del Dropdown -->
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="clienteMenu">
-            <li><a class="dropdown-item" href="{{ route('cliente.mi_cuenta') }}">Mi Cuenta</a></li>
-            <li><a class="dropdown-item" href="{{ route('cliente.notificaciones') }}">Notificaciones</a></li>
-            <li><a class="dropdown-item" href="{{ route('cliente.historial_pagos') }}">Historial de Pagos</a></li>
-            <li><a class="dropdown-item" href="{{ route('cliente.mis_alquileres') }}">Mis Alquileres</a></li>
-
-            <li><hr class="dropdown-divider"></li>
-            <li>
+ <li><a class="dropdown-item" href="{{ route('cliente.mi_cuenta') }}">Mi Cuenta</a></li>
+    <li><a class="dropdown-item" href="{{ route('cliente.notificaciones') }}">Notificaciones</a></li>
+    <li><a class="dropdown-item" href="{{ route('cliente.historial_pagos') }}">Historial de Pagos</a></li>
+    <li><a class="dropdown-item" href="{{ route('cliente.mis_alquileres') }}">Mis Alquileres</a></li>
+    <li><a class="dropdown-item" href="{{ route('cliente.facturas') }}">Facturas</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li>
                 <a class="dropdown-item" href="{{ route('logout') }}"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Cerrar Sesión
@@ -95,48 +95,49 @@
 
 
     <div class="container py-5">
-    <h1 class="text-center">Alquilar Auto</h1>
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow">
-                <img src="{{ asset('storage/' . $auto->foto_auto) }}" class="card-img-top" alt="{{ $auto->modelo }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $auto->marca->nombre_marca }} {{ $auto->modelo }}</h5>
-                    <p class="card-text"><strong>Precio por día:</strong> ${{ $auto->precio_por_dia }}</p>
-                    <p class="card-text"><strong>Estado:</strong> {{ ucfirst($auto->estado) }}</p>
-                    <h6>Fechas no disponibles:</h6>
-                    <ul>
-                        @forelse ($alquileres as $alquiler)
-                            <li>{{ $alquiler->fecha_inicio }} - {{ $alquiler->fecha_fin }}</li>
-                        @empty
-                            <li>No hay fechas reservadas.</li>
-                        @endforelse
-                    </ul>
-                    <form action="{{ route('cliente.autos.procesar_alquiler', $auto->id_auto) }}" method="POST">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
-                            <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="fecha_fin" class="form-label">Fecha de Fin</label>
-                            <input type="date" id="fecha_fin" name="fecha_fin" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="metodo_pago" class="form-label">Método de Pago</label>
-                            <select id="metodo_pago" name="metodo_pago" class="form-control" required>
-                                <option value="tarjeta_credito">Tarjeta de Crédito</option>
-                                <option value="transferencia_bancaria">Transferencia Bancaria</option>
-                                <option value="efectivo">Efectivo</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Reservar</button>
-                    </form>
+        <h1 class="text-center">Reservar Auto</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <img src="{{ asset('storage/' . $auto->foto_auto) }}" class="card-img-top" alt="{{ $auto->modelo }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $auto->marca->nombre_marca }} {{ $auto->modelo }}</h5>
+                        <p><strong>Precio por día:</strong> ${{ $auto->precio_por_dia }}</p>
+                        <p><strong>Estado:</strong> {{ ucfirst($auto->estado) }}</p>
+                        <h6>Fechas no disponibles:</h6>
+                        <ul>
+                            @forelse ($alquileres as $alquiler)
+                                <li>{{ $alquiler->fecha_inicio }} - {{ $alquiler->fecha_fin }}</li>
+                            @empty
+                                <li>No hay fechas reservadas.</li>
+                            @endforelse
+                        </ul>
+                        <form action="{{ route('cliente.autos.procesar_alquiler', $auto->id_auto) }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
+                                <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="fecha_fin" class="form-label">Fecha de Fin</label>
+                                <input type="date" id="fecha_fin" name="fecha_fin" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="metodo_pago" class="form-label">Método de Pago</label>
+                                <select id="metodo_pago" name="metodo_pago" class="form-control" required>
+                                    <option value="tarjeta_credito">Tarjeta de Crédito</option>
+                                    <option value="transferencia_bancaria">Transferencia Bancaria</option>
+                                    <option value="efectivo">Efectivo</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Reservar</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
 </body>
 
     <!-- Sección del Pie de Página -->

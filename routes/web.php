@@ -115,17 +115,21 @@ Route::middleware(['role:cliente'])->prefix('cliente')->name('cliente.')->group(
     Route::post('update-profile', [ClienteController::class, 'updateProfile'])->name('updateProfile');
     Route::post('update-password', [ClienteController::class, 'updatePassword'])->name('updatePassword');
 
+    Route::post('cliente/facturas/{id}/pagar', [ClienteController::class, 'pagarFactura'])->name('pagarFactura');
 
     Route::post('cliente/autos/{id}/reservar', [ClienteController::class, 'reservarAuto'])->name('autos.reservar');
     Route::get('autos', [ClienteController::class, 'autos'])->name('autos');
     Route::get('cliente/autos/{id}/alquiler', [ClienteController::class, 'mostrarFormularioAlquiler'])->name('autos.alquiler');
     Route::post('cliente/autos/{id}/alquiler', [ClienteController::class, 'procesarAlquiler'])->name('autos.procesar_alquiler');
 
-
+    Route::get('cliente/facturas', [ClienteController::class, 'listarFacturas'])->name('facturas');
+    Route::get('cliente/facturas/{id}/pdf', [ClienteController::class, 'descargarFacturaPDF'])->name('factura.pdf');
     Route::get('cliente/factura/{id}', [ClienteController::class, 'verFactura'])->name('factura');
-
-
     Route::get('cliente/mis-alquileres', [ClienteController::class, 'misAlquileres'])->name('mis_alquileres');
+    Route::get('/cliente/alquileres/{id}/detalles', [ClienteController::class, 'detallesAlquiler'])->name('detallesAlquiler');
+    Route::post('/cliente/alquileres/{id}/cancelar', [ClienteController::class, 'cancelarAlquiler'])->name('cancelarAlquiler');
+    Route::get('/cliente/mis-alquileres', [ClienteController::class, 'listarAlquileres'])->name('mis_alquileres');
+
 
     Route::get('historial-pagos', [ClienteController::class, 'historialPagos'])->name('historial_pagos');
 
@@ -134,6 +138,9 @@ Route::middleware(['role:cliente'])->prefix('cliente')->name('cliente.')->group(
 
     // Notificaciones
     Route::get('notificaciones', [ClienteController::class, 'getNotificaciones'])->name('notificaciones');
+
+    Route::get('cliente/autos/{id}/alquiler', [ClienteController::class, 'mostrarFormularioAlquiler'])->name('autos.alquiler');
+
 
 });
 

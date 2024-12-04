@@ -27,6 +27,10 @@ class Pago extends Model
     {
         return $this->belongsTo(Alquiler::class, 'id_alquiler');
     }
+    public function factura()
+    {
+        return $this->belongsTo(Factura::class, 'id_factura');
+    }
 
 
 

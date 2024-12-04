@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Pago;
 use App\Models\Factura;
+use Carbon\Carbon;
+use App\Models\Auto;
+use Barryvdh\DomPDF\Facade\Pdf as Pdf;
 
 class ClienteController extends Controller
 {
@@ -503,43 +506,45 @@ class ClienteController extends Controller
             ->get();
 
         if (!$auto) {
-            return redirect()->route('cliente.autos')->withErrors('El auto seleccionado no existe.');
+            return redirect()->route('clientes.autos')->withErrors('El auto seleccionado no existe.');
         }
 
         return view('clientes.alquiler', compact('auto', 'alquileres', 'usuario'));
     }
+
     public function procesarAlquiler(Request $request, $id)
     {
-        $usuario = session('usuario'); // Obtener el usuario desde la sesión
+        // Obtener el usuario desde la sesión
+        $usuario = session('usuario');
 
+        // Validar los datos ingresados
         $request->validate([
             'fecha_inicio' => 'required|date|after_or_equal:today',
             'fecha_fin' => 'required|date|after:fecha_inicio',
             'metodo_pago' => 'required|string',
         ]);
 
-        // Obtener el cliente y validar su existencia
+        // Buscar al cliente relacionado con el usuario
         $cliente = Cliente::where('id_usuario', $usuario->id_usuario)->first();
 
         if (!$cliente) {
             return redirect()->route('cliente.autos')->withErrors('No se encontró información del cliente.');
         }
 
-        // Obtener el auto y validar disponibilidad
-        $auto = \App\Models\Auto::find($id);
+        // Buscar el auto a reservar
+        $auto = Auto::find($id);
 
-        if (!$auto || $auto->estado !== 'disponible') {
-            return redirect()->route('cliente.autos')->withErrors('El auto seleccionado no está disponible.');
+        if (!$auto) {
+            return redirect()->route('cliente.autos')->withErrors('El auto seleccionado no existe.');
         }
 
-        // Verificar si las fechas no están ocupadas
-        $conflictos = \App\Models\Alquiler::where('id_auto', $id)
-            ->where('estado', '!=', 'completado')
+        // Verificar si las fechas seleccionadas no están ocupadas
+        $conflictos = Alquiler::where('id_auto', $id)
             ->where(function ($query) use ($request) {
                 $query->whereBetween('fecha_inicio', [$request->fecha_inicio, $request->fecha_fin])
                     ->orWhereBetween('fecha_fin', [$request->fecha_inicio, $request->fecha_fin])
-                    ->orWhere(function ($query) use ($request) {
-                        $query->where('fecha_inicio', '<=', $request->fecha_inicio)
+                    ->orWhere(function ($q) use ($request) {
+                        $q->where('fecha_inicio', '<=', $request->fecha_inicio)
                             ->where('fecha_fin', '>=', $request->fecha_fin);
                     });
             })->exists();
@@ -548,12 +553,12 @@ class ClienteController extends Controller
             return redirect()->back()->withErrors('El auto no está disponible en las fechas seleccionadas.');
         }
 
-        // Calcular el costo total
-        $dias = \Carbon\Carbon::parse($request->fecha_inicio)->diffInDays(\Carbon\Carbon::parse($request->fecha_fin));
+        // Calcular el costo total del alquiler
+        $dias = Carbon::parse($request->fecha_inicio)->diffInDays(Carbon::parse($request->fecha_fin));
         $costoTotal = $dias * $auto->precio_por_dia;
 
         // Registrar el alquiler
-        $alquiler = \App\Models\Alquiler::create([
+        $alquiler = Alquiler::create([
             'id_cliente' => $cliente->id_cliente,
             'id_auto' => $id,
             'fecha_inicio' => $request->fecha_inicio,
@@ -562,27 +567,194 @@ class ClienteController extends Controller
             'estado' => 'pendiente',
         ]);
 
-        // Crear el registro del pago
-        \App\Models\Pago::create([
+        // Crear el pago
+        Pago::create([
             'id_alquiler' => $alquiler->id_alquiler,
             'monto' => $costoTotal,
             'metodo_pago' => $request->metodo_pago,
             'referencia_transaccion' => 'TXN-' . uniqid(),
         ]);
 
-        // Crear la factura
-        \App\Models\Factura::create([
+        // Generar la factura
+        Factura::create([
             'id_alquiler' => $alquiler->id_alquiler,
             'numero_factura' => 'FAC-' . strtoupper(uniqid()),
             'monto_total' => $costoTotal,
             'monto_impuesto' => $costoTotal * 0.18, // ITBIS 18%
         ]);
 
-        // Cambiar el estado del auto
+        // Cambiar el estado del auto a "alquilado"
         $auto->update(['estado' => 'alquilado']);
 
-        return redirect()->route('cliente.autos')->with('success', 'Auto reservado exitosamente.');
+        return redirect()->route('cliente.facturas')->with('success', 'Auto reservado exitosamente. Se ha generado la factura.');
     }
+
+    public function pagarFactura(Request $request, $id_factura)
+    {
+        // Validar los datos del formulario
+        $request->validate([
+            'metodo_pago' => 'required|string',
+        ]);
+
+        // Iniciar una transacción para asegurar la consistencia de los datos
+        DB::beginTransaction();
+
+        try {
+            // Buscar la factura por su ID
+            $factura = Factura::with('alquiler')->findOrFail($id_factura);
+
+            // Verificar que la factura está pendiente de pago
+            if ($factura->alquiler->estado !== 'pendiente') {
+                return redirect()->back()->with('error', 'Esta factura ya ha sido pagada o no está pendiente.');
+            }
+
+            // Obtener el alquiler relacionado
+            $alquiler = $factura->alquiler;
+
+            // Calcular el costo total basado en la factura
+            $costoTotal = $factura->monto_total;
+
+            // Crear el registro de pago
+            Pago::create([
+                'id_alquiler' => $alquiler->id_alquiler,
+                'monto' => $costoTotal,
+                'metodo_pago' => $request->metodo_pago,
+                'referencia_transaccion' => 'TXN-' . uniqid(),
+                'id_factura' => $factura->id_factura, // Relación directa con la factura
+            ]);
+
+            // Actualizar el estado del alquiler a 'completado'
+            $alquiler->update(['estado' => 'completado']);
+
+            // Confirmar la transacción
+            DB::commit();
+
+            return redirect()->route('cliente.facturas')->with('success', 'El pago se realizó correctamente.');
+        } catch (\Exception $e) {
+            // Revertir la transacción si ocurre un error
+            DB::rollBack();
+
+            return redirect()->back()->with('error', 'Ocurrió un error al procesar el pago: ' . $e->getMessage());
+        }
+    }
+
+
+    public function listarFacturas()
+    {
+        $usuarioId = session('usuario')->id_usuario;
+
+        // Facturas pendientes (sin pago registrado)
+        $facturasPendientes = Factura::whereHas('alquiler', function ($query) use ($usuarioId) {
+            $query->whereHas('cliente', function ($query) use ($usuarioId) {
+                $query->where('id_usuario', $usuarioId);
+            });
+        })->whereDoesntHave('pagos')->get();
+
+        // Facturas pagadas (con pago registrado)
+        $facturasPagadas = Factura::whereHas('alquiler', function ($query) use ($usuarioId) {
+            $query->whereHas('cliente', function ($query) use ($usuarioId) {
+                $query->where('id_usuario', $usuarioId);
+            });
+        })->whereHas('pagos')->get();
+
+        return view('clientes.facturas', compact('facturasPendientes', 'facturasPagadas'));
+    }
+
+    public function descargarFacturaPDF($id)
+    {
+        // Buscar la factura por su ID
+        $factura = Factura::with('alquiler.auto.marca', 'alquiler.auto.detalles', 'alquiler.cliente')->find($id);
+
+        if (!$factura) {
+            return redirect()->route('clientes.facturas')->with('error', 'Factura no encontrada.');
+        }
+
+        // Preparar los datos para la vista PDF
+        $data = [
+            'factura' => $factura,
+            'alquiler' => $factura->alquiler,
+            'auto' => $factura->alquiler->auto,
+            'cliente' => $factura->alquiler->cliente,
+        ];
+
+        // Generar el PDF usando una vista específica
+        $pdf = PDF::loadView('clientes.factura_pdf', $data);
+        // Descargar el archivo PDF con un nombre dinámico
+        return $pdf->download('Factura-' . $factura->numero_factura . '.pdf');
+    }
+
+    public function historialPagos()
+    {
+        $usuario = session('usuario');
+        $cliente = Cliente::where('id_usuario', $usuario->id_usuario)->first();
+
+        if (!$cliente) {
+            return redirect()->route('cliente.dashboard')->withErrors('No se encontró información del cliente.');
+        }
+
+        $pagos = Pago::with('factura')
+        ->whereHas('factura.alquiler', function ($query) use ($cliente) {
+            $query->where('id_cliente', $cliente->id_cliente);
+        })
+            ->get();
+
+        return view('clientes.historial_pagos', compact('pagos'));
+    }
+
+    public function detallesAlquiler($id)
+    {
+        // Buscar el alquiler por su ID
+        $alquiler = Alquiler::with(['auto.marca', 'auto.detalles', 'cliente'])->find($id);
+
+        if (!$alquiler) {
+            return redirect()->route('cliente.mis_alquileres')->with('error', 'Alquiler no encontrado.');
+        }
+
+        // Pasar el alquiler a la vista
+        return view('clientes.detalles_alquiler', compact('alquiler'));
+    }
+
+    public function cancelarAlquiler($id)
+    {
+        // Buscar el alquiler
+        $alquiler = Alquiler::find($id);
+
+        if (!$alquiler || $alquiler->estado !== 'pendiente') {
+            return redirect()->route('cliente.mis_alquileres')->with('error', 'No se puede cancelar este alquiler.');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            // Cambiar el estado del alquiler
+            $alquiler->update(['estado' => 'cancelado']);
+
+            // Cambiar el estado del auto a "disponible"
+            $alquiler->auto->update(['estado' => 'disponible']);
+
+            DB::commit();
+
+            return redirect()->route('cliente.mis_alquileres')->with('success', 'Alquiler cancelado exitosamente.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('cliente.mis_alquileres')->with('error', 'Ocurrió un error al cancelar el alquiler: ' . $e->getMessage());
+        }
+    }
+    public function listarAlquileres()
+    {
+        $usuarioId = session('usuario')->id_usuario;
+
+        $cliente = Cliente::where('id_usuario', $usuarioId)->first();
+
+        if (!$cliente) {
+            return redirect()->route('cliente.dashboard')->withErrors('No se encontró información del cliente.');
+        }
+
+        $alquileres = Alquiler::with('auto.marca')->where('id_cliente', $cliente->id_cliente)->get();
+
+        return view('clientes.mis_alquileres', compact('alquileres'));
+    }
+
 
 
 }

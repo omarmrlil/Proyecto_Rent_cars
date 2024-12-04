@@ -47,10 +47,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::routeIs('cliente.dashboard') ? '' : '' }}" href="{{ route('cliente.dashboard') }}">Inicio</a>
+                        <a class="nav-link {{ Request::routeIs('cliente.dashboard') ? 'active' : '' }}" href="{{ route('cliente.dashboard') }}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::routeIs('clientes.autos') ?  : 'active' }}" href="{{ route('cliente.autos') }}">Autos</a>
+                        <a class="nav-link {{ Request::routeIs('clientes.autos') ?  : '' }}" href="{{ route('cliente.autos') }}">Autos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ Request::routeIs('clientes.servicios') ? '' : '' }}" href="{{ route('cliente.servicios') }}">Servicios</a>
@@ -69,12 +69,13 @@
 
         <!-- Opciones del Dropdown -->
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="clienteMenu">
-            <li><a class="dropdown-item" href="#">Mi Cuenta</a></li>
-            <li><a class="dropdown-item" href="#">Mis Alquileres</a></li>
-            <li><a class="dropdown-item" href="#">Historial</a></li>
-            <li><a class="dropdown-item" href="#">Configuración</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li>
+ <li><a class="dropdown-item" href="{{ route('cliente.mi_cuenta') }}">Mi Cuenta</a></li>
+    <li><a class="dropdown-item" href="{{ route('cliente.notificaciones') }}">Notificaciones</a></li>
+    <li><a class="dropdown-item" href="{{ route('cliente.historial_pagos') }}">Historial de Pagos</a></li>
+    <li><a class="dropdown-item" href="{{ route('cliente.mis_alquileres') }}">Mis Alquileres</a></li>
+    <li><a class="dropdown-item" href="{{ route('cliente.facturas') }}">Facturas</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li>
                 <a class="dropdown-item" href="{{ route('logout') }}"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Cerrar Sesión
@@ -134,7 +135,7 @@
 <!-- Lista de Autos -->
 <section class="cars-section py-5">
     <div class="container">
-        <h2 class="text-center mb-4">Encuentra tu Auto Perfecto</h2>
+        <h2 class="text-center mb-4">Todos los Autos</h2>
         <div class="row">
             @forelse ($autos as $auto)
                 <div class="col-md-4 mb-4">
@@ -152,18 +153,16 @@
                                 <li><i class="fa fa-snowflake"></i> {{ $auto->detalles->aire_acondicionado == 'sí' ? 'Sí' : 'No' }}</li>
                             </ul>
                             <div class="car-actions text-center">
-                                <a href="{{ route('cliente.autos.show', $auto->id_auto) }}" class="btn btn-outline-secondary btn-sm">Más Detalles</a>
                                 <a href="{{ route('cliente.autos.alquiler', $auto->id_auto) }}" class="btn btn-primary btn-sm">Reservar</a>
-<form id="reservar-form-{{ $auto->id_auto }}" action="{{ route('cliente.autos.reservar', $auto->id_auto) }}" method="POST" style="display: none;">
-    @csrf
-</form>
+                                <a href="" class="btn btn-outline-secondary btn-sm">Más Detalles</a>
+
                             </div>
                         </div>
                     </div>
                 </div>
             @empty
                 <div class="col-12 text-center">
-                    <p>No se encontraron autos con los filtros seleccionados.</p>
+                    <p>No se encontraron autos.</p>
                 </div>
             @endforelse
         </div>

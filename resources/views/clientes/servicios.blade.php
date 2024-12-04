@@ -50,13 +50,13 @@
                         <a class="nav-link {{ Request::routeIs('cliente.dashboard') ? 'active' : '' }}" href="{{ route('cliente.dashboard') }}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::routeIs('cliente.autos') ? 'active' : '' }}" href="{{ route('cliente.autos') }}">Autos</a>
+                        <a class="nav-link {{ Request::routeIs('clientes.autos') ?  : '' }}" href="{{ route('cliente.autos') }}">Autos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::routeIs('cliente.servicios') ? 'active' : '' }}" href="{{ route('cliente.servicios') }}">Servicios</a>
+                        <a class="nav-link {{ Request::routeIs('clientes.servicios') ? '' : '' }}" href="{{ route('cliente.servicios') }}">Servicios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::routeIs('cliente.contact') ? 'active' : '' }}" href="{{ route('cliente.contact') }}">Contacto</a>
+                        <a class="nav-link {{ Request::routeIs('clientes.contact') ? '' : '' }}" href="{{ route('cliente.contact') }}">Contacto</a>
                     </li>
                 </ul>
 
@@ -69,12 +69,13 @@
 
         <!-- Opciones del Dropdown -->
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="clienteMenu">
-            <li><a class="dropdown-item" href="#">Mi Cuenta</a></li>
-            <li><a class="dropdown-item" href="#">Mis Alquileres</a></li>
-            <li><a class="dropdown-item" href="#">Historial</a></li>
-            <li><a class="dropdown-item" href="#">Configuración</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li>
+ <li><a class="dropdown-item" href="{{ route('cliente.mi_cuenta') }}">Mi Cuenta</a></li>
+    <li><a class="dropdown-item" href="{{ route('cliente.notificaciones') }}">Notificaciones</a></li>
+    <li><a class="dropdown-item" href="{{ route('cliente.historial_pagos') }}">Historial de Pagos</a></li>
+    <li><a class="dropdown-item" href="{{ route('cliente.mis_alquileres') }}">Mis Alquileres</a></li>
+    <li><a class="dropdown-item" href="{{ route('cliente.facturas') }}">Facturas</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li>
                 <a class="dropdown-item" href="{{ route('logout') }}"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Cerrar Sesión

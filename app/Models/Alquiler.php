@@ -47,5 +47,9 @@ class Alquiler extends Model
     {
         return $this->belongsTo(MarcaAuto::class, 'id_marca', 'id_marca');
     }
+    public function pagos()
+    {
+        return $this->hasMany(Pago::class, 'id_alquiler');
+    }
 
 }

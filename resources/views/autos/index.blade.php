@@ -61,7 +61,6 @@
                             </ul>
                             <div class="car-actions text-center">
                                 <a href="{{ route('autos.show', $auto->id_auto) }}" class="btn btn-outline-secondary btn-sm">Más Detalles</a>
-                                <a href="#" class="btn btn-primary btn-sm">Reservar</a>
                             </div>
                         </div>
                     </div>

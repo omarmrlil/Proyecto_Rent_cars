@@ -92,86 +92,131 @@
     </nav>
 </header>
 <body>
+    <div class="container py-5">
+        <h1 class="text-center">Mis Facturas</h1>
 
+        <!-- Facturas Pendientes -->
+        <h2 class="mt-4">Facturas Pendientes</h2>
+        @if ($facturasPendientes->isEmpty())
+            <p class="text-center">No tienes facturas pendientes.</p>
+        @else
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Factura</th>
+                            <th>Auto</th>
+                            <th>Fechas de Alquiler</th>
+                            <th>Monto Total</th>
+                            <th>Impuesto</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($facturasPendientes as $factura)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $factura->numero_factura }}</td>
+                                <td>{{ $factura->alquiler->auto->marca->nombre_marca }} {{ $factura->alquiler->auto->modelo }}</td>
+                                <td>{{ $factura->alquiler->fecha_inicio }} a {{ $factura->alquiler->fecha_fin }}</td>
+                                <td>${{ $factura->monto_total }}</td>
+                                <td>${{ $factura->monto_impuesto }}</td>
+                                <td>
+                                    <a href="{{ route('cliente.factura.pdf', $factura->id_factura) }}" class="btn btn-primary btn-sm">Descargar</a>
+                                    <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#pagarFacturaModal-{{ $factura->id_factura }}">Pagar</button>
+                                </td>
+                            </tr>
 
-<div class="container mt-5">
-        <h1 class="text-center mb-4">Mi Cuenta</h1>
-
-        <!-- Mensajes de éxito o error -->
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
+                            <!-- Modal para Pagar Factura -->
+                            <div class="modal fade" id="pagarFacturaModal-{{ $factura->id_factura }}" tabindex="-1" aria-labelledby="pagarFacturaLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="pagarFacturaLabel">Pagar Factura</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form action="{{ route('cliente.pagarFactura', $factura->id_factura) }}" method="POST">
+                                            @csrf
+                                            <div class="modal-body">
+                                                <p><strong>Factura:</strong> {{ $factura->numero_factura }}</p>
+                                                <p><strong>Monto Total:</strong> ${{ $factura->monto_total }}</p>
+                                                <p><strong>Impuesto:</strong> ${{ $factura->monto_impuesto }}</p>
+                                                <div class="mb-3">
+                                                    <label for="metodo_pago" class="form-label">Método de Pago</label>
+                                                    <select name="metodo_pago" id="metodo_pago" class="form-control" required>
+                                                        <option value="tarjeta_credito">Tarjeta de Crédito</option>
+                                                        <option value="transferencia_bancaria">Transferencia Bancaria</option>
+                                                        <option value="efectivo">Efectivo</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-success">Pagar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         @endif
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+
+        <!-- Facturas Pagadas -->
+        <h2 class="mt-4">Facturas Pagadas</h2>
+        @if ($facturasPagadas->isEmpty())
+            <p class="text-center">No tienes facturas pagadas.</p>
+        @else
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Factura</th>
+                            <th>Auto</th>
+                            <th>Fechas de Alquiler</th>
+                            <th>Monto Total</th>
+                            <th>Impuesto</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($facturasPagadas as $factura)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $factura->numero_factura }}</td>
+                                <td>{{ $factura->alquiler->auto->marca->nombre_marca }} {{ $factura->alquiler->auto->modelo }}</td>
+                                <td>{{ $factura->alquiler->fecha_inicio }} a {{ $factura->alquiler->fecha_fin }}</td>
+                                <td>${{ $factura->monto_total }}</td>
+                                <td>${{ $factura->monto_impuesto }}</td>
+                                <td>
+                                    <a href="{{ route('cliente.factura.pdf', $factura->id_factura) }}" class="btn btn-primary btn-sm">Descargar</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         @endif
-
-        <div class="row">
-            <!-- Perfil -->
-            <form method="POST" action="{{ route('cliente.updateProfile') }}">
-    @csrf
-    <div class="form-group">
-        <label for="nombre">Nombre</label>
-        <input type="text" name="nombre" id="nombre" class="form-control" value="{{ session('usuario')->nombre }}" required>
     </div>
 
-    <div class="form-group">
-        <label for="email">Correo Electrónico</label>
-        <input type="email" name="email" id="email" class="form-control" value="{{ session('usuario')->email }}" required>
-    </div>
+    <h1 class="text-center">Mis Facturas</h1>
 
-    <div class="form-group">
-        <label for="telefono">Teléfono</label>
-        <input type="text" name="telefono" id="telefono" class="form-control" value="{{ session('usuario')->cliente->telefono ?? '' }}">
-    </div>
+@if (session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
 
-    <div class="form-group">
-        <label for="direccion">Dirección</label>
-        <input type="text" name="direccion" id="direccion" class="form-control" value="{{ session('usuario')->cliente->direccion ?? '' }}">
-    </div>
+@if (session('error'))
+    <div class="alert alert-danger">{{ session('error') }}</div>
+@endif
 
-    <button type="submit" class="btn btn-primary mt-3">Actualizar Perfil</button>
-</form>
-
-            <!-- Cambiar Contraseña -->
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header bg-secondary text-white">
-                        <h4>Cambiar Contraseña</h4>
-<form method="POST" action="{{ route('cliente.updatePassword') }}">
-    @csrf
-    <div class="form-group">
-        <label for="current_password">Contraseña Actual</label>
-        <input type="password" name="current_password" id="current_password" class="form-control" required>
-    </div>
-
-    <div class="form-group">
-        <label for="new_password">Nueva Contraseña</label>
-        <input type="password" name="new_password" id="new_password" class="form-control" required>
-    </div>
-
-    <div class="form-group">
-        <label for="new_password_confirmation">Confirmar Nueva Contraseña</label>
-        <input type="password" name="new_password_confirmation" id="new_password_confirmation" class="form-control" required>
-    </div>
-
-    <button type="submit" class="btn btn-primary mt-3">Actualizar Contraseña</button>
-</form>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Scripts externos -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-    <!-- Sección del Pie de Página -->
+<!-- Sección del Pie de Página -->
     <footer class="bg-light text-dark py-4">
     <div class="container">
         <div class="row text-center text-md-start">
@@ -215,4 +260,5 @@
 
         <!-- Custom Scripts -->
         <script src="{{ asset('js/scripts.js') }}"></script>
+    </body>
 </html>

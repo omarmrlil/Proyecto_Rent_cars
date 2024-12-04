@@ -30,6 +30,7 @@
         <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">
    <!-- Barra de Navegación -->
 <header>
+    <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <!-- Logo y Nombre de la Compañía -->
@@ -91,87 +92,41 @@
         </div>
     </nav>
 </header>
-<body>
+<div class="container py-5">
+    <h1 class="text-center">Detalles del Alquiler</h1>
+    <table class="table table-bordered mt-4">
+        <tbody>
+            <tr>
+                <th>Auto</th>
+                <td>{{ $alquiler->auto->marca->nombre_marca ?? 'N/A' }} {{ $alquiler->auto->modelo ?? 'N/A' }}</td>
+            </tr>
+            <tr>
+                <th>Cliente</th>
+                <td>{{ $alquiler->cliente->nombre }}</td>
+            </tr>
+            <tr>
+                <th>Fecha de Inicio</th>
+                <td>{{ $alquiler->fecha_inicio }}</td>
+            </tr>
+            <tr>
+                <th>Fecha de Fin</th>
+                <td>{{ $alquiler->fecha_fin }}</td>
+            </tr>
+            <tr>
+                <th>Costo Total</th>
+                <td>${{ number_format($alquiler->costo_total, 2) }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ ucfirst($alquiler->estado) }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="{{ route('cliente.mis_alquileres') }}" class="btn btn-primary">Volver a Mis Alquileres</a>
 
-
-<div class="container mt-5">
-        <h1 class="text-center mb-4">Mi Cuenta</h1>
-
-        <!-- Mensajes de éxito o error -->
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <div class="row">
-            <!-- Perfil -->
-            <form method="POST" action="{{ route('cliente.updateProfile') }}">
-    @csrf
-    <div class="form-group">
-        <label for="nombre">Nombre</label>
-        <input type="text" name="nombre" id="nombre" class="form-control" value="{{ session('usuario')->nombre }}" required>
-    </div>
-
-    <div class="form-group">
-        <label for="email">Correo Electrónico</label>
-        <input type="email" name="email" id="email" class="form-control" value="{{ session('usuario')->email }}" required>
-    </div>
-
-    <div class="form-group">
-        <label for="telefono">Teléfono</label>
-        <input type="text" name="telefono" id="telefono" class="form-control" value="{{ session('usuario')->cliente->telefono ?? '' }}">
-    </div>
-
-    <div class="form-group">
-        <label for="direccion">Dirección</label>
-        <input type="text" name="direccion" id="direccion" class="form-control" value="{{ session('usuario')->cliente->direccion ?? '' }}">
-    </div>
-
-    <button type="submit" class="btn btn-primary mt-3">Actualizar Perfil</button>
-</form>
-
-            <!-- Cambiar Contraseña -->
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header bg-secondary text-white">
-                        <h4>Cambiar Contraseña</h4>
-<form method="POST" action="{{ route('cliente.updatePassword') }}">
-    @csrf
-    <div class="form-group">
-        <label for="current_password">Contraseña Actual</label>
-        <input type="password" name="current_password" id="current_password" class="form-control" required>
-    </div>
-
-    <div class="form-group">
-        <label for="new_password">Nueva Contraseña</label>
-        <input type="password" name="new_password" id="new_password" class="form-control" required>
-    </div>
-
-    <div class="form-group">
-        <label for="new_password_confirmation">Confirmar Nueva Contraseña</label>
-        <input type="password" name="new_password_confirmation" id="new_password_confirmation" class="form-control" required>
-    </div>
-
-    <button type="submit" class="btn btn-primary mt-3">Actualizar Contraseña</button>
-</form>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 </body>
-    <!-- Sección del Pie de Página -->
+<!-- Sección del Pie de Página -->
     <footer class="bg-light text-dark py-4">
     <div class="container">
         <div class="row text-center text-md-start">
