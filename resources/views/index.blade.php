@@ -16,7 +16,7 @@
     <div class="hero-content">
         <h1>¿Busca un auto para alquilar?</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <a href="#" class="btn btn-primary">Reservar</a>
+        <a href="/login" class="btn btn-primary">Reservar</a>
     </div>
     <div class="hero-image">
         <img src="{{ asset('images/src/img/logos/imagen de sesion 1.png') }}" alt="Auto en la playa">

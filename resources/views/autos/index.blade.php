@@ -1,8 +1,12 @@
-@extends('layout.app')
+@extends('layout.app') <!-- herencia -->
 
-@section('content')
+@section('content') <!--Define el contenido que será colocado en la sección content del layout base.-->
 
 <!-- Sección de Filtros -->
+
+<div class="d-flex justify-content-end mb-3">
+    <a href="{{ route('autos.create') }}" class="btn btn-success">Añadir Vehículo</a>
+</div>
 <section class="filter-section py-4 bg-light">
     <div class="container">
         <h3 class="text-center mb-4">Búsqueda Rapida!!</h3>
@@ -57,7 +61,7 @@
                                 <li><i class="fa fa-cogs"></i> {{ ucfirst($auto->detalles->transmision ?? 'N/A') }}</li>
                                 <li><i class="fa fa-gas-pump"></i> {{ ucfirst($auto->detalles->tipo_combustible ?? 'N/A') }}</li>
                                 <li><i class="fa fa-chair"></i> {{ $auto->detalles->numero_asientos ?? 'N/A' }}</li>
-                                <li><i class="fa fa-snowflake"></i> {{ $auto->detalles->aire_acondicionado == 'sí' ? 'Sí' : 'No' }}</li>
+                                <li><i class="fa fa-snowflake"></i> {{ $auto->detalles?->aire_acondicionado == 'sí' ? 'Sí' : 'No' }}</li>
                             </ul>
                             <div class="car-actions text-center">
                                 <a href="{{ route('autos.show', $auto->id_auto) }}" class="btn btn-outline-secondary btn-sm">Más Detalles</a>

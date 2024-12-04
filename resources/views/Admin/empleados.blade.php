@@ -1,6 +1,8 @@
 @extends('Admin.layouts.admin')
 
 @section('content')
+
+<a href="{{ route('empleados.create') }}" class="btn btn-success mb-3">Añadir Empleado</a>
 <div class="container-fluid">
     <h2>Gestión de Empleados</h2>
     <table class="table table-striped">
