@@ -1,0 +1,201 @@
+/* empleados.css */
+
+/* General */
+body {
+    background-color: #f8f9fa;
+    font-family: "Arial", sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #007bff;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+}
+
+.navbar-brand img {
+    margin-right: 10px;
+}
+
+.nav-link {
+    color: #007bff;
+}
+
+.nav-link:hover {
+    color: #0056b3;
+}
+
+.navbar-toggler-icon {
+    background-color: #007bff;
+}
+
+/* Cards */
+.card {
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-footer {
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+/* Footer */
+footer {
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    color: #555;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+footer .social-icons a {
+    margin: 0 10px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+footer .social-icons a:hover {
+    color: #0056b3;
+}
+
+/* Buttons */
+.btn-outline-primary {
+    border: 2px solid #007bff;
+    color: #007bff;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #0056b3;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #b52a38;
+}
+
+/* Table */
+.table {
+    margin-top: 2rem;
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #fff;
+}
+
+.table th,
+.table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #007bff;
+    color: black;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Alerts */
+.alert {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.alert-info {
+    background-color: #e9f7ff;
+    color: #31708f;
+}
+
+.alert-success {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
+.alert-danger {
+    background-color: #f2dede;
+    color: #a94442;
+}
+
+/* Forms */
+.form-control {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 2rem;
+    }
+
+    .navbar {
+        padding: 0.75rem 1rem;
+    }
+}
+
+.navbar {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #ddd;
+    padding: 20px 0;
+}
+
+footer .social-icons a {
+    margin-right: 10px;
+    color: #555;
+}
+
+footer .social-icons a:hover {
+    color: #007bff;
+}

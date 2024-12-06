@@ -1,25 +1,28 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Models;
 
-class CreateReportesTable extends Migration
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Reporte extends Model
 {
-    public function up()
-    {
-        Schema::create('reportes', function (Blueprint $table) {
-            $table->id('id_reporte');
-            $table->string('tipo_reporte');
-            $table->enum('estado_reporte', ['pendiente', 'generado'])->default('pendiente');
-            $table->timestamp('fecha_generacion')->nullable();
-            $table->string('ruta_archivo')->nullable();
-            $table->timestamps();
-        });
-    }
+    use HasFactory;
 
-    public function down()
-    {
-        Schema::dropIfExists('reportes');
-    }
+    // Especificar la tabla si no sigue la convención de pluralización
+    protected $table = 'reportes';
+
+    // Especificar la clave primaria (id_reporte en lugar de id)
+    protected $primaryKey = 'id_reporte';
+
+    // Los campos que pueden ser asignados masivamente
+    protected $fillable = [
+        'tipo_reporte',
+        'estado_reporte',
+        'fecha_generacion',
+        'ruta_archivo',
+    ];
+
+    // Si no usas los campos de tiempo automáticamente generados (created_at, updated_at)
+    // protected $timestamps = false;
 }

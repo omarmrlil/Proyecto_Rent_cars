@@ -69,88 +69,30 @@
             </div>
         </nav>
     </header>
-
-    <div class="container py-5">
-        <h1 class="text-center mb-4">Dashboard del Empleado</h1>
-
-        <!-- Sección de Estadísticas -->
-        <!-- Dashboard del Empleado -->
-<div class="row mb-4">
-    <div class="col-md-3">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Mantenimientos</h5>
-                <h4>{{ $mantenimientosTotales ?? 0 }}</h4>
-            </div>
+<div class="container py-5">
+    <h1 class="text-center mb-4">Editar Mantenimiento</h1>
+    <form action="{{ route('empleado.mantenimientos.actualizar', $mantenimiento->id_mantenimiento) }}" method="POST">
+        @csrf
+        @method('PUT')
+        <div class="mb-3">
+            <label for="tipo_mantenimiento" class="form-label">Tipo de Mantenimiento</label>
+            <input type="text" class="form-control" id="tipo_mantenimiento" name="tipo_mantenimiento" value="{{ $mantenimiento->tipo_mantenimiento }}" required>
         </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Tareas Pendientes</h5>
-                <h4>{{ $tareasPendientes ?? 0 }}</h4>
-            </div>
+        <div class="mb-3">
+            <label for="costo" class="form-label">Costo</label>
+            <input type="number" class="form-control" id="costo" name="costo" value="{{ $mantenimiento->costo }}" required>
         </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Notificaciones</h5>
-                <h4>{{ $notificacionesPendientes ?? 0 }}</h4>
-            </div>
+        <div class="mb-3">
+            <label for="fecha_mantenimiento" class="form-label">Fecha Programada</label>
+            <input type="date" class="form-control" id="fecha_mantenimiento" name="fecha_mantenimiento" value="{{ $mantenimiento->fecha_mantenimiento }}" required>
         </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Completados</h5>
-                <h4>{{ $mantenimientosFinalizados ?? 0 }}</h4>
-            </div>
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ $mantenimiento->descripcion }}</textarea>
         </div>
-    </div>
-</div>
-
-        <!-- Tabla de Mantenimientos -->
-        <h2 class="mb-3">Mantenimientos Asignados</h2>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>#</th>
-                        <th>Auto</th>
-                        <th>Tipo</th>
-                        <th>Fecha Programada</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($mantenimientos as $mantenimiento)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $mantenimiento->auto->marca->nombre_marca ?? 'N/A' }}</td>
-                            <td>{{ ucfirst($mantenimiento->tipo_mantenimiento) }}</td>
-                            <td>{{ $mantenimiento->fecha_mantenimiento }}</td>
-                            <td>
-                                <span class="badge bg-{{ $mantenimiento->estado === 'pendiente' ? 'warning' : ($mantenimiento->estado === 'finalizado' ? 'success' : 'info') }}">
-                                    {{ ucfirst($mantenimiento->estado) }}
-                                </span>
-                            </td>
-                            <td>
-                                <a href="{{ route('empleado.mantenimientos.detalles', $mantenimiento->id_mantenimiento) }}" class="btn btn-primary btn-sm">Detalles</a>
-                                @if ($mantenimiento->estado === 'pendiente')
-                                    <form action="{{ route('empleado.mantenimientos.finalizar', $mantenimiento->id_mantenimiento) }}" method="POST" style="display: inline-block;">
-                                        @csrf
-                                        <button type="submit" class="btn btn-success btn-sm">Finalizar</button>
-                                    </form>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        <a href="{{ route('empleado.mantenimientos') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
 
     <!-- Footer -->
     <footer class="bg-light text-dark py-4 mt-5">
@@ -171,9 +113,4 @@
             </div>
         </div>
     </footer>
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
-</body>
-</html>
+</div>

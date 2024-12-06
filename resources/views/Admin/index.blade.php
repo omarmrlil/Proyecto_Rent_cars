@@ -49,34 +49,36 @@
                 </div>
             </div>
 
+            
             <!-- Tabla de Alquileres Recientes -->
-            <div class="table-responsive mt-4">
-                <h5>Alquileres Recientes</h5>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Cliente</th>
-                            <th>Auto</th>
-                            <th>Fecha de Inicio</th>
-                            <th>Fecha de Fin</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($alquileresRecientes as $alquiler)
-                        <tr>
-                            <td>{{ $alquiler->id_alquiler }}</td>
-                            <td>{{ $alquiler->cliente->nombre }}</td>
-                            <td>{{ $alquiler->auto->modelo }}</td>
-                            <td>{{ $alquiler->fecha_inicio }}</td>
-                            <td>{{ $alquiler->fecha_fin }}</td>
-                            <td>{{ $alquiler->estado }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+<div class="table-responsive mt-4">
+    <h5>Alquileres Recientes</h5>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Auto</th>
+                <th>Fecha de Inicio</th>
+                <th>Fecha de Fin</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($alquileresRecientes as $alquiler)
+            <tr>
+                <td>{{ $alquiler->id_alquiler }}</td>
+                <td>{{ $alquiler->cliente->usuario->nombre }}</td> <!-- Nombre del cliente -->
+                <td>{{ $alquiler->auto->modelo }}</td>
+                <td>{{ $alquiler->fecha_inicio }}</td>
+                <td>{{ $alquiler->fecha_fin }}</td>
+                <td>{{ $alquiler->estado }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
 
             <!-- Tabla de Piezas de Inventario Disponibles -->
             <div class="table-responsive mt-4">

@@ -154,7 +154,7 @@
                             </ul>
                             <div class="car-actions text-center">
                                 <a href="{{ route('cliente.autos.alquiler', $auto->id_auto) }}" class="btn btn-primary btn-sm">Reservar</a>
-                                <a href="" class="btn btn-outline-secondary btn-sm">Más Detalles</a>
+                                <a href="{{ route('cliente.autos.show', $auto->id_auto) }}" class="btn btn-outline-secondary btn-sm">Más Detalles</a>
 
                             </div>
                         </div>

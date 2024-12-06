@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Dashboard del Empleado</title>
-
+    <title>Mis Tareas</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -71,108 +70,88 @@
     </header>
 
     <div class="container py-5">
-        <h1 class="text-center mb-4">Dashboard del Empleado</h1>
+        <h1 class="text-center mb-4">Mis Tareas</h1>
 
-        <!-- Sección de Estadísticas -->
-        <!-- Dashboard del Empleado -->
-<div class="row mb-4">
-    <div class="col-md-3">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Mantenimientos</h5>
-                <h4>{{ $mantenimientosTotales ?? 0 }}</h4>
+        @if ($tareas->isEmpty())
+            <div class="alert alert-info text-center">
+                <p>No tienes tareas asignadas actualmente.</p>
             </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Tareas Pendientes</h5>
-                <h4>{{ $tareasPendientes ?? 0 }}</h4>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Notificaciones</h5>
-                <h4>{{ $notificacionesPendientes ?? 0 }}</h4>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Completados</h5>
-                <h4>{{ $mantenimientosFinalizados ?? 0 }}</h4>
-            </div>
-        </div>
-    </div>
-</div>
-
-        <!-- Tabla de Mantenimientos -->
-        <h2 class="mb-3">Mantenimientos Asignados</h2>
-        <div class="table-responsive">
+        @else
             <table class="table table-striped">
-                <thead class="table-dark">
+                <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Auto</th>
-                        <th>Tipo</th>
-                        <th>Fecha Programada</th>
+                        <th>Título</th>
+                        <th>Descripción</th>
                         <th>Estado</th>
+                        <th>Fecha Límite</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($mantenimientos as $mantenimiento)
+                    @foreach ($tareas as $tarea)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $mantenimiento->auto->marca->nombre_marca ?? 'N/A' }}</td>
-                            <td>{{ ucfirst($mantenimiento->tipo_mantenimiento) }}</td>
-                            <td>{{ $mantenimiento->fecha_mantenimiento }}</td>
+                            <td>{{ $tarea->titulo }}</td>
+                            <td>{{ $tarea->descripcion }}</td>
+                            <td>{{ ucfirst($tarea->estado) }}</td>
+                            <td>{{ \Carbon\Carbon::parse($tarea->fecha_limite)->format('d-m-Y') ?? 'Sin Fecha' }}</td>
                             <td>
-                                <span class="badge bg-{{ $mantenimiento->estado === 'pendiente' ? 'warning' : ($mantenimiento->estado === 'finalizado' ? 'success' : 'info') }}">
-                                    {{ ucfirst($mantenimiento->estado) }}
-                                </span>
-                            </td>
-                            <td>
-                                <a href="{{ route('empleado.mantenimientos.detalles', $mantenimiento->id_mantenimiento) }}" class="btn btn-primary btn-sm">Detalles</a>
-                                @if ($mantenimiento->estado === 'pendiente')
-                                    <form action="{{ route('empleado.mantenimientos.finalizar', $mantenimiento->id_mantenimiento) }}" method="POST" style="display: inline-block;">
-                                        @csrf
-                                        <button type="submit" class="btn btn-success btn-sm">Finalizar</button>
-                                    </form>
-                                @endif
+                                <form action="{{ route('empleado.tareas.estado', $tarea->id_tarea) }}" method="POST">
+                                    @csrf
+                                    <select name="estado" class="form-control form-control-sm">
+                                        <option value="pendiente" {{ $tarea->estado == 'pendiente' ? 'selected' : '' }}>Pendiente</option>
+                                        <option value="en progreso" {{ $tarea->estado == 'en progreso' ? 'selected' : '' }}>En Progreso</option>
+                                        <option value="completada" {{ $tarea->estado == 'completada' ? 'selected' : '' }}>Completada</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary btn-sm mt-2">Actualizar</button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-        </div>
+        @endif
     </div>
 
-    <!-- Footer -->
     <footer class="bg-light text-dark py-4 mt-5">
         <div class="container">
             <div class="row text-center text-md-start">
                 <div class="col-md-3">
                     <h5>A&J Rent Cars</h5>
                     <p>Proporcionando un servicio de calidad en el alquiler de vehículos.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
                 </div>
                 <div class="col-md-3">
                     <h5>Contacto</h5>
                     <p><i class="fa fa-map-marker-alt me-2"></i> La Vega, RD</p>
+                    <p><i class="fa fa-phone me-2"></i> 829-753-2211</p>
+                    <p><i class="fa fa-envelope me-2"></i> ajrentcars@gmail.com</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{{ route('empleado.dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ route('empleado.mantenimientos') }}">Mantenimientos</a></li>
+                        <li><a href="{{ route('empleado.tareas') }}">Tareas</a></li>
+                    </ul>
                 </div>
                 <div class="col-md-3">
                     <h5>Soporte</h5>
                     <p>¿Necesitas ayuda? Contáctanos.</p>
                 </div>
             </div>
+            <hr>
+            <div class="text-center">
+                <p>&copy; 2024 A&J Rent Cars. Todos los derechos reservados.</p>
+            </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
 </body>
