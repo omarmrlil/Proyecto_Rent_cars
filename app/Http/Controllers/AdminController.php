@@ -16,6 +16,7 @@ use App\Models\TipoAuto;
 use App\Models\Usuario;
 use App\Models\Reporte;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 
 class AdminController extends Controller
@@ -67,11 +68,7 @@ class AdminController extends Controller
     }
 
 
-    public function autos()
-    {
-        $autos = Auto::all();
-        return view('admin.autos', compact('autos'));
-    }
+
 
 
     public function store(Request $request)
@@ -131,29 +128,18 @@ class AdminController extends Controller
         return redirect()->route('admin.autos.index')->with('success', 'Auto registrado exitosamente.');
     }
 
-    // Método para mostrar el formulario de creación de un nuevo auto
-    public function createauto()
-    {
-        $marcas = MarcaAuto::all();
-        $tipos = TipoAuto::all();
-        return view('Admin.autos', compact('marcas', 'tipos'));
-    }
 
+
+
+    // Método para mostrar los alquileres
     public function alquileres()
     {
         // Obtener los alquileres con los datos relacionados (cliente y auto)
         $alquileres = Alquiler::with(['cliente.usuario', 'auto'])->orderBy('fecha_inicio', 'desc')->get();
 
-        // Obtener todos los autos y clientes disponibles para el formulario de creación
-        $autos = Auto::all();
-        $clientes = Cliente::all();
-
         // Retornar a la vista de alquileres, pasando los datos necesarios
-        return view('admin.alquileres', compact('alquileres', 'autos', 'clientes'));
-    }
-
-
-
+        return view('admin.alquileres', compact('alquileres'));
+    } 
     public function storeAlquiler(Request $request)
     {
         $request->validate([
@@ -238,23 +224,26 @@ class AdminController extends Controller
         return view('admin.empleados', compact('empleados'));
     }
 
+
     public function storeEmpleado(Request $request)
     {
         // Validar los datos
         $request->validate([
             'nombre' => 'required|string|max:100',
             'email' => 'required|email|unique:usuarios,email',
-            'password' => 'required|string|min:8', // Validar que la contraseña tenga al menos 8 caracteres
             'cargo' => 'required|string|max:100',
             'fecha_contratacion' => 'required|date',
             'salario' => 'required|numeric|min:0',
         ]);
 
+        // Establecer la contraseña por defecto si no se proporciona
+        $password = $request->password ? bcrypt($request->password) : bcrypt('1234'); // Si no hay contraseña, asignar 1234
+
         // Crear el usuario
         $usuario = Usuario::create([
             'nombre' => $request->nombre,
             'email' => $request->email,
-            'password' => bcrypt($request->password), // Encriptar la contraseña antes de guardarla
+            'password' => $password, // Guardamos la contraseña
             'rol' => 'empleado', // Asignamos el rol de empleado
         ]);
 
@@ -269,6 +258,7 @@ class AdminController extends Controller
         return redirect()->route('admin.empleados')->with('success', 'Empleado creado exitosamente.');
     }
 
+
     public function editEmpleado($id)
     {
         $empleado = Empleado::with('usuario')->findOrFail($id);
@@ -277,30 +267,37 @@ class AdminController extends Controller
 
     public function updateEmpleado(Request $request, $id)
     {
+        // Validar los datos
         $request->validate([
             'nombre' => 'required|string|max:100',
-            'email' => 'required|string|email|max:100|unique:usuarios,email,' . $id,  // Evitar que el email del empleado se duplique
+            'email' => 'required|string|email|max:100|unique:usuarios,email,' . $id . ',id_usuario', // Cambiado para usar id_usuario
             'cargo' => 'required|string|max:50',
             'fecha_contratacion' => 'required|date',
             'salario' => 'required|numeric|min:0',
         ]);
 
-        // Actualizar el usuario
+        // Obtener el empleado con su usuario relacionado
         $empleado = Empleado::with('usuario')->findOrFail($id);
+
+        // Actualizar los datos del usuario
         $empleado->usuario->update([
             'nombre' => $request->nombre,
-            'email' => $request->email
+            'email' => $request->email,
         ]);
 
         // Actualizar los datos del empleado
         $empleado->update([
             'cargo' => $request->cargo,
             'fecha_contratacion' => $request->fecha_contratacion,
-            'salario' => $request->salario
+            'salario' => $request->salario,
         ]);
 
+        // Redirigir al listado de empleados con un mensaje de éxito
         return redirect()->route('admin.empleados')->with('success', 'Empleado actualizado exitosamente.');
     }
+
+
+
     public function deleteEmpleado($id)
     {
         $empleado = Empleado::with('usuario')->findOrFail($id);
@@ -626,8 +623,18 @@ class AdminController extends Controller
     // Mostrar calendario de alquileres
     public function calendarioAlquileres()
     {
-        $alquileres = Alquiler::select('fecha_inicio', 'fecha_fin', 'id_auto')->get();
-        return view('admin.calendarioAlquileres', compact('alquileres'));
+        $alquileres = Alquiler::select('fecha_inicio', 'fecha_fin', 'id_auto')
+        ->get()
+        ->map(function ($alquiler) {
+            // Asegurarse de que las fechas estén como instancias de Carbon
+            $alquiler->fecha_inicio = \Carbon\Carbon::parse($alquiler->fecha_inicio);
+            $alquiler->fecha_fin = \Carbon\Carbon::parse($alquiler->fecha_fin);
+            return $alquiler;
+        });
+
+        return view('admin.calendarioAlquileres',
+            compact('alquileres')
+        );
     }
 
     // Mostrar calendario de mantenimientos
@@ -635,6 +642,122 @@ class AdminController extends Controller
     {
         $mantenimientos = Mantenimiento::select('fecha_mantenimiento', 'id_auto')->get();
         return view('admin.calendarioMantenimientos', compact('mantenimientos'));
+    }
+
+
+    public function autos()
+    {
+        $autos = Auto::all();
+        return view('admin.autos', compact('autos'));
+    }
+
+    // Mostrar el formulario para crear un auto
+    public function createAuto()
+    {
+        $marcas = MarcaAuto::all();
+        $tipos = TipoAuto::all();
+        return view('admin.createAuto', compact('marcas', 'tipos'));
+    }
+
+    // Almacenar un nuevo auto
+    public function storeAuto(Request $request)
+    {
+        // Validación de los datos del formulario
+        $request->validate([
+            'id_marca' => 'required|exists:marcas_auto,id_marca',
+            'id_tipo' => 'required|exists:tipos_auto,id_tipo',
+            'modelo' => 'required|string|max:50',
+            'año' => 'required|integer|min:1900|max:' . date('Y'),
+            'matricula' => 'required|string|unique:autos,matricula|max:50',
+            'precio_por_dia' => 'required|numeric|min:0',
+            'kilometraje' => 'required|integer|min:0',
+            'foto_auto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'transmision' => 'required|in:manual,automatica',
+            'consumo_combustible' => 'required|numeric|min:0',
+            'capacidad_tanque' => 'required|numeric|min:0',
+            'numero_asientos' => 'required|integer|min:1',
+            'numero_puertas' => 'required|integer|min:1',
+            'color' => 'required|string|max:50',
+            'tipo_combustible' => 'required|in:gasolina,diesel,electrico,hibrido',
+            'capacidad_maletero' => 'nullable|integer|min:0',
+            'aire_acondicionado' => 'required|in:sí,no',
+            'gps' => 'required|in:sí,no',
+            'velocidad_maxima' => 'required|integer|min:0',
+            'peso' => 'required|numeric|min:0',
+            'fecha_compra' => 'required|date',
+            'condicion' => 'required|in:nuevo,usado',
+        ]);
+
+        // Obtener todos los datos del request
+        $data = $request->all();
+
+        // Subir la foto si es proporcionada
+        if ($request->hasFile('foto_auto')) {
+            $data['foto_auto'] = $request->file('foto_auto')->store('fotos_autos', 'public');
+        }
+
+        // Crear el auto
+        $auto = Auto::create($data);
+
+        // Crear los detalles del auto asociado
+        $auto->detalles()->create([
+            'transmision' => $request->transmision,
+            'consumo_combustible' => $request->consumo_combustible,
+            'capacidad_tanque' => $request->capacidad_tanque,
+            'numero_asientos' => $request->numero_asientos,
+            'numero_puertas' => $request->numero_puertas,
+            'color' => $request->color,
+            'tipo_combustible' => $request->tipo_combustible,
+            'capacidad_maletero' => $request->capacidad_maletero,
+            'aire_acondicionado' => $request->aire_acondicionado,
+            'gps' => $request->gps,
+            'velocidad_maxima' => $request->velocidad_maxima,
+            'peso' => $request->peso,
+            'fecha_compra' => $request->fecha_compra,
+            'condicion' => $request->condicion,
+        ]);
+
+        // Redirigir al listado de autos con un mensaje de éxito
+        return redirect()->route('admin.autos')->with('success', 'Auto y sus detalles registrados exitosamente.');
+    }
+
+    // Mostrar el formulario de edición de un auto
+    public function editAuto($id)
+    {
+        $auto = Auto::findOrFail($id);
+        $marcas = MarcaAuto::all();
+        $tipos = TipoAuto::all();
+        return view('admin.editAuto', compact('auto', 'marcas', 'tipos'));
+    }
+
+    // Actualizar un auto
+    public function updateAuto(Request $request, $id)
+    {
+        $request->validate([
+            'id_marca' => 'required|exists:marcas_auto,id_marca',
+            'id_tipo' => 'required|exists:tipos_auto,id_tipo',
+            'modelo' => 'required|string|max:50',
+            'año' => 'required|integer|min:1900|max:' . date('Y'),
+            'matricula' => 'required|string|max:50|unique:autos,matricula,' . $id . ',id_auto',
+            'precio_por_dia' => 'required|numeric|min:0',
+            'foto_auto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $auto = Auto::findOrFail($id);
+        $data = $request->all();
+
+        if ($request->hasFile('foto_auto')) {
+            // Eliminar la foto antigua si existe
+            if ($auto->foto_auto && Storage::exists($auto->foto_auto)) {
+                Storage::delete($auto->foto_auto);
+            }
+            $data['foto_auto'] = $request->file('foto_auto')->store('fotos_autos', 'public');
+        }
+
+        $auto->update($data);
+
+
+        return redirect()->route('admin.autos')->with('success', 'Auto actualizado exitosamente.');
     }
 
 }

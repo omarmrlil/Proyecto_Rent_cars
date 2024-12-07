@@ -99,6 +99,17 @@
                                 <i class="fas fa-users"></i> Clientes
                             </a>
                         </li>
+                        <li class="nav-item">
+    <a class="nav-link text-white" href="{{ route('admin.calendarioAlquileres') }}">
+        <i class="fas fa-calendar-alt"></i> Calendario de Alquileres
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link text-white" href="{{ route('admin.calendarioMantenimientos') }}">
+        <i class="fas fa-calendar-alt"></i> Calendario de Mantenimientos
+    </a>
+</li>
+
                     </ul>
                 </div>
             </nav>

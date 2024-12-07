@@ -106,8 +106,11 @@ Route::middleware(['role:administrador'])->prefix('admin')->name('admin.')->grou
 
     // Rutas de gestión de autos
     Route::get('autos', [AdminController::class, 'autos'])->name('autos');
-    Route::get('autos', [AdminController::class, 'createAuto'])->name('autos'); // Ruta para mostrar el formulario de creación de autos
-    Route::post('autos', [AdminController::class, 'store'])->name('autos.store'); // Ruta para almacenar un auto
+    Route::get('autos/create', [AdminController::class, 'createAuto'])->name('autos.create'); // Crear Auto
+    Route::post('autos/store', [AdminController::class, 'storeAuto'])->name('autos.store'); // Guardar Auto
+    Route::get('autos/{id}/edit', [AdminController::class, 'editAuto'])->name('autos.edit'); // Editar Auto
+    Route::put('autos/{id}', [AdminController::class, 'updateAuto'])->name('autos.update'); // Actualizar Auto
+    Route::delete('autos/{id}', [AdminController::class, 'deleteAuto'])->name('autos.delete'); // Eliminar Auto// Ruta para almacenar un auto
 
     // Rutas de alquileres
     Route::get('alquileres', [AdminController::class, 'alquileres'])->name('alquileres'); // Lista de alquileres

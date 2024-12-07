@@ -9,14 +9,15 @@
 <script>
     $(document).ready(function() {
         $('#alquileres-calendar').fullCalendar({
-            events: @json($alquileres->map(function($alquiler) {
+            events: {!! json_encode($alquileres->map(function($alquiler) {
                 return [
-                    'title' => 'Alquiler: ' . $alquiler->id_auto,
-                    'start' => $alquiler->fecha_inicio,
-                    'end' => $alquiler->fecha_fin,
+                    'title' => 'Alquiler: ' . $alquiler->id_auto, // Asegúrate de que 'id_auto' o el campo correcto esté disponible
+                    'start' => $alquiler->fecha_inicio->format('Y-m-d H:i:s'),
+                    'end' => $alquiler->fecha_fin->format('Y-m-d H:i:s'),
                 ];
-            }))
+            })) !!}
         });
     });
 </script>
+
 @endsection
